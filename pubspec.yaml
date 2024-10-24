@@ -25,6 +25,9 @@ dependencies:
   flutter_image_compress:
   intl:
   waveform_flutter:
+  flutter_quill_delta_from_html:
+  flutter_html:
+  vsc_quill_delta_to_html:
 dev_dependencies:
   flutter_test:
     sdk: flutter

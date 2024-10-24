@@ -51,15 +51,21 @@ class BlogPage extends StatelessWidget {
                   itemCount: controller.blogs.length,
                   itemBuilder: (context, index) {
                     final blog = controller.blogs[index];
-                    return SizedBox(
-                      width: 300,
-                      height: 200,
-                      child: BlogCard(
-                        title: blog['title'],
-                        imageUrl: blog['cover_image'] ??
-                            'https://placekitten.com/400/300',
-                        date: blog['created_at'],
-                        summary: blog['content'],
+                    return GestureDetector(
+                      onTap: () {
+                        // Detay sayfasına yönlendirme
+                        Get.toNamed('/blog_detail/${blog['id']}');
+                      },
+                      child: SizedBox(
+                        width: 300,
+                        height: 200,
+                        child: BlogCard(
+                          title: blog['title'],
+                          imageUrl: blog['cover_image'] ??
+                              'https://placekitten.com/400/300',
+                          date: blog['created_at'],
+                          summary: blog['content'],
+                        ),
                       ),
                     );
                   },
