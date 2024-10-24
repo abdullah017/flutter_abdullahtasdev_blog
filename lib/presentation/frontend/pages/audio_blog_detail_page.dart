@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/audioplayer_widget.dart';
 import 'package:get/get.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/audio_blog_detail_controller.dart';
 
 class AudioBlogDetailPage extends StatelessWidget {
-  final int blogId; // Blog ID parametresi
+  final int blogId;
 
   const AudioBlogDetailPage({
     super.key,
@@ -17,22 +18,36 @@ class AudioBlogDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AudioBlogDetailController());
-    controller.loadAudioBlog(blogId); // Blog verisini yüklemek için çağırıyoruz
+    controller.loadAudioBlog(blogId);
 
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => Text(controller.title.value)), // Başlığı dinliyoruz
+        title: Obx(() => Text(controller.title.value)),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        // Quill Delta içeriğini HTML formatına dönüştürüyoruz
-        final List<Map<String, dynamic>> delta =
-            jsonDecode(controller.content.value);
-        final converter = QuillDeltaToHtmlConverter(delta);
-        final htmlContent = converter.convert(); // Delta'dan HTML'e dönüştürme
+        // Blog içeriği JSON'dan HTML'e dönüştürülüyor
+        List<dynamic> delta;
+        try {
+          delta = jsonDecode(controller.content.value);
+        } catch (e) {
+          print("JSON Parse Hatası: $e");
+          delta = []; // Eğer hata oluşursa boş bir liste döndürüyoruz
+        }
+
+        // `List<Map<String, dynamic>>` formatına dönüştürme
+        List<Map<String, dynamic>> convertedDelta = [];
+        for (var item in delta) {
+          if (item is Map<String, dynamic>) {
+            convertedDelta.add(item);
+          }
+        }
+
+        final converter = QuillDeltaToHtmlConverter(convertedDelta);
+        final htmlContent = converter.convert();
 
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -51,7 +66,7 @@ class AudioBlogDetailPage extends StatelessWidget {
 
               // Tarih
               Text(
-                'Tarih: ${controller.date.value}',
+                'Tarih: ${_formatDate(controller.date.value)}',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.grey,
@@ -59,111 +74,76 @@ class AudioBlogDetailPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Blog görseli
-              if (controller.imageUrl.value.isNotEmpty) ...[
-                Image.network(controller.imageUrl.value),
-                const SizedBox(height: 16),
-              ],
+              // // Blog görseli (varsa)
+              // if (controller.imageUrl.value.isNotEmpty) ...[
+              //   Image.network(controller.imageUrl.value),
+              //   const SizedBox(height: 16),
+              // ],
 
-              // Blog içeriği
-              Html(data: htmlContent), // HTML içeriği burada render ediliyor
+              // Blog içeriği (HTML formatında gösteriliyor ve seçilebilir)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: HtmlWidget(
+                  htmlContent,
+                  // Metni seçilebilir hale getirir
+
+                  // Linklerin tıklanabilir olmasını sağlar
+                  onTapUrl: (url) {
+                    launchUrl(Uri.parse(url));
+                    return true;
+                  },
+                  // onTapUrl: (url) async {
+                  //   final uri = Uri.parse(url);
+                  //   if (await canLaunchUrl(uri)) {
+                  //     await launchUrl(uri,
+                  //         mode: LaunchMode.externalApplication);
+                  //   } else {
+                  //     // Hata durumu için kullanıcıya bildirim gönderebilirsiniz
+                  //     ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBar(content: Text('Bağlantı açılamadı: $url')),
+                  //     );
+                  //   }
+                  // },
+                  // Stil ayarları
+                  textStyle: const TextStyle(
+                    fontSize: 16.0,
+                    height: 1.5,
+                  ),
+                ),
+              ),
 
               const SizedBox(height: 16),
 
-              // Sesli blog oynatıcı
-              const Text(
-                'Ses Dosyası',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              AudioPlayerWidget(audioUrl: controller.audioUrl.value),
+              // // Sesli blog oynatıcı
+              // const Text(
+              //   'Ses Dosyası',
+              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              // ),
+              // const SizedBox(height: 8),
+
+              // AudioPlayerWidget'ı Obx içerisinde dinamik olarak güncelle
+              if (controller.audioUrl.value.isNotEmpty)
+                JustAudioPlayerWidget(
+                  audioUrl: controller.audioUrl.value,
+                  albumArtUrl: controller.imageUrl.value,
+                )
+              else
+                const Text('Ses dosyası bulunamadı.'),
             ],
           ),
         );
       }),
     );
   }
-}
 
-class AudioPlayerWidget extends StatefulWidget {
-  final String audioUrl;
-
-  const AudioPlayerWidget({super.key, required this.audioUrl});
-
-  @override
-  _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
-}
-
-class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  bool isPlaying = false;
-  double playbackSpeed = 1.0;
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  Future<void> _playAudio() async {
-    await _audioPlayer.setSourceUrl(widget.audioUrl);
-    await _audioPlayer.setPlaybackRate(playbackSpeed);
-    await _audioPlayer.resume();
-    setState(() {
-      isPlaying = true;
-    });
-  }
-
-  Future<void> _pauseAudio() async {
-    await _audioPlayer.pause();
-    setState(() {
-      isPlaying = false;
-    });
-  }
-
-  void _changeSpeed(double speed) {
-    setState(() {
-      playbackSpeed = speed;
-    });
-    _audioPlayer.setPlaybackRate(speed);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: isPlaying ? _pauseAudio : _playAudio,
-              child: Text(isPlaying ? 'Durdur' : 'Oynat'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        // Ses hızını değiştirme butonları
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(
-              onPressed: () => _changeSpeed(0.5),
-              child: const Text('0.5x'),
-            ),
-            ElevatedButton(
-              onPressed: () => _changeSpeed(1.0),
-              child: const Text('1.0x'),
-            ),
-            ElevatedButton(
-              onPressed: () => _changeSpeed(1.5),
-              child: const Text('1.5x'),
-            ),
-            ElevatedButton(
-              onPressed: () => _changeSpeed(2.0),
-              child: const Text('2.0x'),
-            ),
-          ],
-        ),
-      ],
-    );
+  // Tarih formatlama fonksiyonu (gün/ay/yıl)
+  String _formatDate(String date) {
+    if (date.isEmpty) return 'Tarih Yok';
+    try {
+      final parsedDate = DateTime.parse(date);
+      return '${parsedDate.day.toString().padLeft(2, '0')}.${parsedDate.month.toString().padLeft(2, '0')}.${parsedDate.year}';
+    } catch (e) {
+      return 'Geçersiz Tarih';
+    }
   }
 }

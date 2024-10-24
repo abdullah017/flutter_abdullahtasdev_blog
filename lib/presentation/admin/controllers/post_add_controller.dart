@@ -118,7 +118,7 @@ class PostAddController extends GetxController {
         content,
         coverImageUrl.value,
         isPublished.value,
-        audioUrl.value,
+        audioUrl.value == '' ? null : audioUrl.value,
       );
     } catch (e) {
       developer.log("Error adding post: $e");

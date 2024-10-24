@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:developer' as developer;
+
 class PostEditController extends GetxController {
   final PostRepository postRepository = PostRepository();
   final AudioPlayer audioPlayer = AudioPlayer();
@@ -78,8 +79,14 @@ class PostEditController extends GetxController {
     try {
       isLoading(true);
       final newContentJson = jsonEncode(newContent);
-      return await postRepository.updatePost(id, title.value, newContentJson,
-          newCoverImage, isPublished.value, newAudioUrl);
+      return await postRepository.updatePost(
+        id,
+        title.value,
+        newContentJson,
+        newCoverImage,
+        isPublished.value,
+        newAudioUrl,
+      );
     } catch (e) {
       developer.log(e.toString());
       return false;
