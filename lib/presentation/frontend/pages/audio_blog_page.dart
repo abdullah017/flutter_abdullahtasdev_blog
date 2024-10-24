@@ -51,12 +51,18 @@ class AudioBlogPage extends StatelessWidget {
                   itemCount: controller.audioBlogs.length,
                   itemBuilder: (context, index) {
                     final audioBlog = controller.audioBlogs[index];
-                    return AudioBlogCard(
-                      title: audioBlog['title'],
-                      imageUrl: audioBlog['cover_image'] ??
-                          'https://placekitten.com/400/300',
-                      audioUrl: audioBlog['audio_url'],
-                      date: audioBlog['created_at'],
+                    return GestureDetector(
+                      onTap: () {
+                        // Sesli Blog detay sayfasına yönlendirme
+                        Get.toNamed('/audio_blog_detail/${audioBlog['id']}');
+                      },
+                      child: AudioBlogCard(
+                        title: audioBlog['title'],
+                        imageUrl: audioBlog['cover_image'] ??
+                            'https://placekitten.com/400/300',
+                        audioUrl: audioBlog['audio_url'],
+                        date: audioBlog['created_at'],
+                      ),
                     );
                   },
                 );

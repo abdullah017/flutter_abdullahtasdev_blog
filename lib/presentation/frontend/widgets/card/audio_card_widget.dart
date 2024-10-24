@@ -283,7 +283,6 @@ class _BackCardContentState extends State<_BackCardContent> {
   @override
   void dispose() {
     super.dispose();
-    // Eğer kendi stream'inizi yönetiyorsanız burada temizlemelisiniz.
   }
 
   // Stream<Amplitude> createRandomAmplitudeStream() async* {}
