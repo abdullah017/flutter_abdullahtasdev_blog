@@ -23,7 +23,8 @@ dependencies:
   file_picker:
   audioplayers:
   flutter_image_compress:
-
+  intl:
+  waveform_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(), // Light tema
       darkTheme: ThemeData.dark(), // Dark tema
       themeMode: ThemeMode.system, // Sistem temasına göre tema seçimi
-      initialRoute: '/admin', // Uygulama açıldığında ilk açılacak sayfa
+      initialRoute: '/blog', // Uygulama açıldığında ilk açılacak sayfa
       getPages: AppRoutes.routes, // Tüm uygulama route'larını yöneten yapı
     );
   }
