@@ -28,6 +28,8 @@ dependencies:
   flutter_quill_delta_from_html:
   flutter_html:
   vsc_quill_delta_to_html:
+  url_launcher:
+  flutter_widget_from_html: ^0.15.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -116,13 +117,18 @@ class PostAddPage extends StatelessWidget {
           // Gönderiyi kaydetme butonu
           ElevatedButton(
             onPressed: () async {
-              final content = contentController.document.toDelta().toJson();
-              await controller.submitPost(
+              final content = jsonEncode(contentController.document
+                  .toDelta()
+                  .toJson()); // Quill içeriğini JSON formatına çeviriyoruz
+              await controller
+                  .submitPost(
                 titleController.text,
-                content.toString(),
-              );
-              Get.snackbar('Success', 'Post added successfully');
-              Get.back();
+                content,
+              )
+                  .whenComplete(() {
+                Get.snackbar('Success', 'Post added successfully');
+                //Get.back();
+              });
             },
             child: Obx(() => controller.isLoading.value
                 ? const CircularProgressIndicator()

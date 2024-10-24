@@ -44,7 +44,9 @@ class PostEditPage extends StatelessWidget {
                   postId,
                   quillContent,
                   controller.coverImageUrl.value,
-                  controller.audioUrl.value,
+                  controller.audioUrl.value == ''
+                      ? null
+                      : controller.audioUrl.value,
                 );
                 if (success) {
                   Get.snackbar('Success', 'Post updated successfully');
