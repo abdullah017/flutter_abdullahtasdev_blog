@@ -1,69 +1,52 @@
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
+import 'package:get/get.dart';
 
-class TopMenu extends StatefulWidget {
-  const TopMenu({super.key});
 
-  @override
-  State<TopMenu> createState() => _TopMenuState();
-}
+class TopMenu extends StatelessWidget {
+  final VoidCallback onMenuToggle;
 
-class _TopMenuState extends State<TopMenu> with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
-  bool _isSearchExpanded = false;
-  final TextEditingController _searchController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
+  TopMenu({super.key, required this.onMenuToggle});
 
-  // Menüdeki başlıklar
-  final List<String> _menuItems = ['Components', 'Sections', 'Templates'];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {
-        setState(() {
-          _isSearchExpanded = false;
-        });
-      }
-    });
-  }
-
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final TopMenuController controller = Get.find<TopMenuController>();
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MediaQuery.of(context).size.width < 600;
+
     return Container(
-      decoration: const BoxDecoration(color: Colors.transparent),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 30,
-              spreadRadius: 5,
-              offset: const Offset(0, 5),
+      height: 70,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+              border:
+                  Border.all(color: Colors.white.withOpacity(0.3), width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 30,
+                  spreadRadius: 5,
+                  offset: const Offset(0, 5),
+                ),
+              ],
             ),
-          ],
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        height: 70,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Sol taraftaki logo kısmı
-            const Row(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                // Logo
+                const Text(
                   'abdullahtas.dev',
                   style: TextStyle(
                     fontSize: 22,
@@ -71,132 +54,155 @@ class _TopMenuState extends State<TopMenu> with SingleTickerProviderStateMixin {
                     color: Colors.white,
                   ),
                 ),
+                // Menü Öğeleri veya Hamburger İkonu
+                if (!isMobile) ..._buildDesktopMenuItems(),
+                if (isMobile) _buildMobileMenuButton(),
               ],
             ),
-
-            // Menü öğeleri
-            Row(
-              children: _menuItems.map((item) {
-                int index = _menuItems.indexOf(item);
-                return GestureDetector(
-                  onTap: () => _onItemTap(index),
-                  child: MouseRegion(
-                    onEnter: (_) => setState(() {}),
-                    onExit: (_) => setState(() {}),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      transform: Matrix4.identity()
-                        ..scale(
-                          _selectedIndex == index
-                              ? 1.2
-                              : 1.0, // Büyütme animasyonu
-                          _selectedIndex == index ? 1.2 : 1.0,
-                        ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Menü İkonu ve Yazı
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                size: 18,
-                                color: _selectedIndex == index
-                                    ? Colors.white
-                                    : Colors.white.withOpacity(0.6),
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                item,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: _selectedIndex == index
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                  color: _selectedIndex == index
-                                      ? Colors.white
-                                      : Colors.white.withOpacity(0.8),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          // Seçili olan öğenin alt çizgisi
-                          if (_selectedIndex == index)
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                              width: 30, // Genişlik arttı
-                              height: 4, // Kalınlık arttı
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-
-            // Sağ tarafta arama butonu ve genişleyen arama alanı
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isSearchExpanded = !_isSearchExpanded;
-                  if (_isSearchExpanded) {
-                    _focusNode.requestFocus();
-                  }
-                });
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: _isSearchExpanded ? 200 : 100,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    Icon(
-                      _isSearchExpanded ? Icons.search : Icons.search,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 5),
-                    if (_isSearchExpanded)
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          focusNode: _focusNode,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Search...',
-                            hintStyle: TextStyle(color: Colors.white70),
-                          ),
-                          onSubmitted: (value) {
-                            if (kDebugMode) {
-                              print("Arama yapıldı: $value");
-                            }
-                            setState(() {
-                              _isSearchExpanded = false;
-                            });
-                          },
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  /// Masaüstü Görünümü için Menü Öğelerini Oluşturur
+  List<Widget> _buildDesktopMenuItems() {
+    return [
+      Row(
+        children: controller.menuItems.map((item) {
+          int index = controller.menuItems.indexOf(item);
+          return Obx(() => GestureDetector(
+                onTap: () {
+                  controller.selectedIndex.value = index;
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    transform: Matrix4.identity()
+                      ..scale(
+                        controller.selectedIndex.value == index ? 1.2 : 1.0,
+                        controller.selectedIndex.value == index ? 1.2 : 1.0,
+                      ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              size: 18,
+                              color: controller.selectedIndex.value == index
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.6),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              item,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight:
+                                    controller.selectedIndex.value == index
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                color: controller.selectedIndex.value == index
+                                    ? Colors.white
+                                    : Colors.white.withOpacity(0.8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        if (controller.selectedIndex.value == index)
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            width: 30,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ));
+        }).toList(),
+      ),
+      const SizedBox(width: 20),
+      // Arama Butonu ve Genişleyen Arama Alanı
+      Obx(() => GestureDetector(
+            onTap: () {
+              controller.isSearchExpanded.value =
+                  !controller.isSearchExpanded.value;
+              if (controller.isSearchExpanded.value) {
+                controller.focusNode.requestFocus();
+              } else {
+                controller.focusNode.unfocus();
+              }
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: controller.isSearchExpanded.value ? 200 : 100,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 5),
+                        if (controller.isSearchExpanded.value)
+                          Expanded(
+                            child: TextField(
+                              controller: controller.searchController,
+                              focusNode: controller.focusNode,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Search...',
+                                hintStyle: TextStyle(color: Colors.white70),
+                              ),
+                              onSubmitted: (value) {
+                                if (kDebugMode) {
+                                  print("Search performed: $value");
+                                }
+                                controller.isSearchExpanded.value = false;
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )),
+    ];
+  }
+
+  /// Mobil Görünüm için Hamburger Menü Butonunu Oluşturur
+  Widget _buildMobileMenuButton() {
+    return Obx(() => IconButton(
+          icon: Icon(
+            controller.isMenuExpanded.value ? Icons.close : Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: onMenuToggle,
+        ));
   }
 }

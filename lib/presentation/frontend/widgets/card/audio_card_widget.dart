@@ -1,12 +1,9 @@
 import 'dart:math';
-import 'package:universal_html/html.dart' as html;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:waveform_flutter/waveform_flutter.dart'; // waveform_flutter paketini eklediğinizden emin olun
-
-// wave_flutter paketinden Amplitude sınıfını kullanıyoruz, kendi Amplitude sınıfınızı tanımlamayın.
+import 'package:waveform_flutter/waveform_flutter.dart'; // Ensure this package supports both platforms
+import 'package:audioplayers/audioplayers.dart'; // Add audioplayers package
 
 class AudioBlogCard extends StatefulWidget {
   final String title;
@@ -31,24 +28,24 @@ class _AudioBlogCardState extends State<AudioBlogCard>
   late AnimationController _controller;
   late Animation<double> _animation;
   bool isHovered = false;
-  html.AudioElement? _audioElement;
+  AudioPlayer? _audioPlayer; // Use AudioPlayer from audioplayers package
   bool isPlayingPreview = false;
 
   @override
   void initState() {
     super.initState();
-    // AnimationController'ı başlatın
+    // Initialize AnimationController
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 
-    // Animasyonu tanımlayın (0'dan pi'ye)
+    // Define the animation (0 to pi)
     _animation = Tween<double>(begin: 0, end: pi).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    // Animasyon durumu dinleyicisi
+    // Animation status listener
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
@@ -65,8 +62,8 @@ class _AudioBlogCardState extends State<AudioBlogCard>
   @override
   void dispose() {
     _controller.dispose();
-    _audioElement?.pause();
-    _audioElement = null;
+    _audioPlayer?.dispose();
+    _audioPlayer = null;
     super.dispose();
   }
 
@@ -80,7 +77,7 @@ class _AudioBlogCardState extends State<AudioBlogCard>
     }
   }
 
-  void _playPreview() {
+  Future<void> _playPreview() async {
     if (!isPlayingPreview && widget.audioUrl.isNotEmpty) {
       setState(() {
         isPlayingPreview = true;
@@ -88,43 +85,57 @@ class _AudioBlogCardState extends State<AudioBlogCard>
       if (kDebugMode) {
         print('Playing audio from URL: ${widget.audioUrl}');
       }
-      _audioElement?.pause(); // Varolan sesi durdur
-      _audioElement = html.AudioElement(widget.audioUrl)
-        ..autoplay = true
-        ..onEnded.listen((event) {
+
+      _audioPlayer = AudioPlayer();
+      try {
+        await _audioPlayer!.play(UrlSource(widget.audioUrl));
+        // Listen for completion
+        _audioPlayer!.onPlayerComplete.listen((event) {
           if (kDebugMode) {
             print('Audio playback completed.');
           }
           setState(() {
             isPlayingPreview = false;
           });
-        })
-        ..onError.listen((event) {
-          if (kDebugMode) {
-            print('Error playing audio.');
-          }
-          setState(() {
-            isPlayingPreview = false;
-          });
-          // Hata mesajı göstermek için SnackBar ekleyebilirsiniz
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Ses oynatılırken bir hata oluştu.')),
-          );
         });
-      // 30 saniye sonra durdur
-      Future.delayed(const Duration(seconds: 30), () {
-        if (mounted) {
-          // Widget hala mounted ise
-          _stopPreview();
+
+        // // Handle errors
+        // _audioPlayer!.onPlayerError.listen((msg) {
+        //   if (kDebugMode) {
+        //     print('Error playing audio: $msg');
+        //   }
+        //   setState(() {
+        //     isPlayingPreview = false;
+        //   });
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     const SnackBar(content: Text('Ses oynatılırken bir hata oluştu.')),
+        //   );
+        // });
+
+        // Stop after 30 seconds
+        Future.delayed(const Duration(seconds: 30), () {
+          if (mounted) {
+            _stopPreview();
+          }
+        });
+      } catch (e) {
+        if (kDebugMode) {
+          print('Exception playing audio: $e');
         }
-      });
+        setState(() {
+          isPlayingPreview = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Ses oynatılırken bir hata oluştu.')),
+        );
+      }
     }
   }
 
   void _stopPreview() {
     if (isPlayingPreview) {
-      _audioElement?.pause();
-      _audioElement?.currentTime = 0;
+      _audioPlayer?.stop();
+      _audioPlayer = null;
       setState(() {
         isPlayingPreview = false;
       });
@@ -142,16 +153,16 @@ class _AudioBlogCardState extends State<AudioBlogCard>
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
-          // Ön yüz mü yoksa arka yüz mü görünecek
+          // Determine if front or back is visible
           bool isFront = _animation.value < (pi / 2);
           return Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001) // Perspektif ekleyin
+              ..setEntry(3, 2, 0.001) // Add perspective
               ..rotateY(_animation.value),
             child: Stack(
               children: [
-                // Ön Yüz
+                // Front Face
                 Visibility(
                   visible: isFront,
                   child: _FrontCardContent(
@@ -160,7 +171,7 @@ class _AudioBlogCardState extends State<AudioBlogCard>
                     date: widget.date,
                   ),
                 ),
-                // Arka Yüz
+                // Back Face
                 Visibility(
                   visible: !isFront,
                   child: Transform(
@@ -170,7 +181,7 @@ class _AudioBlogCardState extends State<AudioBlogCard>
                       stopPreview: _stopPreview,
                       audioUrl: widget.audioUrl,
                       isPlayingPreview: isPlayingPreview,
-                      waveformData: const [], // wave_flutter paketinde dalga verisi gerekmiyor
+                      waveformData: const [], // Update if needed
                     ),
                   ),
                 ),
@@ -196,7 +207,7 @@ class _FrontCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Tarihi formatlayın
+    // Format the date
     final DateTime parsedDate = DateTime.parse(date);
     final String formattedDate = DateFormat('dd.MM.yyyy').format(parsedDate);
 
@@ -206,7 +217,7 @@ class _FrontCardContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Blog resmi
+          // Blog image
           Expanded(
             child: ClipRRect(
               borderRadius:
@@ -223,7 +234,7 @@ class _FrontCardContent extends StatelessWidget {
           ),
           const SizedBox(height: 8),
 
-          // Blog başlığı
+          // Blog title
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
@@ -235,7 +246,7 @@ class _FrontCardContent extends StatelessWidget {
             ),
           ),
 
-          // Blog tarihi
+          // Blog date
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: Text(
@@ -315,13 +326,12 @@ class _BackCardContentState extends State<_BackCardContent> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Eğer ses çalıyor ise dalga göster, değilse metin göster
+            // Show waveform if audio is playing, else show text
             widget.isPlayingPreview
                 ? SizedBox(
                     height: 100,
                     child: AnimatedWaveList(
-                      stream:
-                          _amplitudeStream, // Amplitude stream doğrudan kullanılıyor
+                      stream: _amplitudeStream, // Use Amplitude stream directly
                     ),
                   )
                 : const Text(
@@ -332,8 +342,8 @@ class _BackCardContentState extends State<_BackCardContent> {
 
             ElevatedButton(
               onPressed: () {
-                widget.stopPreview(); // Önizlemeyi durdur
-                // Detay sayfasına yönlendirme
+                widget.stopPreview(); // Stop preview
+                // Navigate to detail page
                 Navigator.pushNamed(context, '/audio_blog_detail',
                     arguments: widget.audioUrl);
               },
