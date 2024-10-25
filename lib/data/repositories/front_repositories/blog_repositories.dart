@@ -4,27 +4,56 @@ class BlogRepository {
   final GraphQLService _graphqlService = GraphQLService();
 
   // Yazılı blogları çekmek için GraphQL sorgusu
-  Future<List<dynamic>> fetchBlogs() async {
+  Future<Map<String, dynamic>> fetchBlogs(int page, int pageSize) async {
+    String fragment = '''
+    fragment BlogFields on posts {
+      id
+      title
+      cover_image
+      created_at
+      content
+    }
+    ''';
+
     String query = '''
-    query GetPosts {
-      posts(where: {audio_url: {_is_null: true}, is_published: {_eq: true}}) {
-        id
-        title
-        cover_image
-        created_at
-        content
+    $fragment
+
+    query GetPosts(\$offset: Int!, \$limit: Int!) {
+      posts_aggregate(where: {audio_url: {_is_null: true}, is_published: {_eq: true}}) {
+        aggregate {
+          count
+        }
+      }
+      posts(
+        where: {audio_url: {_is_null: true}, is_published: {_eq: true}}, 
+        limit: \$limit,
+        offset: \$offset
+      ) {
+        ...BlogFields
       }
     }
     ''';
 
-    final result = await _graphqlService.performQuery(query);
+    final variables = {
+      'limit': pageSize,
+      'offset': (page - 1) * pageSize,
+    };
+
+    final result =
+        await _graphqlService.performQuery(query, variables: variables);
 
     if (result.hasException) {
       print(result.exception.toString());
-      return [];
+      throw Exception(result.exception.toString());
     }
 
-    return result.data!['posts'];
+    final totalCount = result.data!['posts_aggregate']['aggregate']['count'];
+    final posts = result.data!['posts'];
+
+    return {
+      'totalCount': totalCount,
+      'posts': posts,
+    };
   }
 
   // Sesli blogları çekmek için GraphQL sorgusu

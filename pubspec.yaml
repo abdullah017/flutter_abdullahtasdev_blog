@@ -30,6 +30,7 @@ dependencies:
   vsc_quill_delta_to_html:
   url_launcher:
   flutter_widget_from_html: ^0.15.2
+  cached_network_image:
 dev_dependencies:
   flutter_test:
     sdk: flutter
