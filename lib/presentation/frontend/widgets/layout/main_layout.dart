@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/sidebar/sidebar_widget.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/top_menu.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget body;
@@ -9,10 +9,26 @@ class MainLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Stack(
         children: [
-          const Sidebar(), // Sabit sidebar burada
-          Expanded(child: body), // Her sayfanın içeriği
+          // Arka Plan Resmi veya Gradient
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                    'https://kingstudio.ro/demos/glass-ui/assets/images/blur.jpg'),
+                fit: BoxFit.cover,
+              ),
+            
+            ),
+          ),
+          // Overlay: Frosted Glass Sidebar ve Body
+          Column(
+            children: [
+              const TopMenu(), // Frosted glass sidebar
+              Expanded(child: body), // Sayfa içeriği
+            ],
+          ),
         ],
       ),
     );
