@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,94 +13,136 @@ class BlogDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // BlogDetailController'ı alıyoruz
     final BlogDetailController controller = Get.put(BlogDetailController());
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Blog Detayları'),
+        title: Obx(() => Text(
+              controller.title.value,
+              style: const TextStyle(color: Colors.white),
+            )),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        // Blog verisi var mı kontrol ediyoruz
         if (controller.blog.isEmpty) {
           return const Center(child: Text('Blog bulunamadı.'));
         }
 
-        // Blog verisini alıyoruz
         final blog = controller.blog;
         final String title = blog['title'] ?? 'Başlık Yok';
         final String imageUrl = blog['cover_image'] ?? '';
         final String content = blog['content'] ?? '';
         final String date = blog['created_at'] ?? '';
 
-        // Quill Delta içeriğini JSON'dan HTML'e dönüştürmek
         List<dynamic> delta;
         try {
-          delta = jsonDecode(content); // Quill Delta içeriğini çözüyoruz
+          delta = jsonDecode(content);
         } catch (e) {
-          delta = []; // Eğer JSON parse hatası varsa boş bir delta kullan
+          delta = [];
           if (kDebugMode) {
             print('Content JSON Parse Hatası: $e');
           }
         }
 
-        // Delta verisini Map<String, dynamic> tipine dönüştürme
         List<Map<String, dynamic>> convertedDelta =
             List<Map<String, dynamic>>.from(delta);
-
         final converter = QuillDeltaToHtmlConverter(convertedDelta);
-        final htmlContent = converter.convert(); // Delta'dan HTML'e çevirme
+        final htmlContent = converter.convert();
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Başlık
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              Stack(
+                children: [
+                  if (imageUrl.isNotEmpty)
+                    Image.network(
+                      imageUrl,
+                      width: double.infinity,
+                      height: 300,
+                      fit: BoxFit.cover,
+                    ),
+                  Container(
+                    width: double.infinity,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.3),
+                          Colors.black.withOpacity(0.5),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-
-              // Tarih
-              Text(
-                'Tarih: ${_formatDate(date)}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Blog görseli (varsa)
-              if (imageUrl.isNotEmpty) ...[
-                Image.network(imageUrl),
-                const SizedBox(height: 16),
-              ],
-
-              // Blog içeriği (HTML formatında gösteriliyor ve seçilebilir)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 200.0),
-                child: SelectionArea(
-                  child: HtmlWidget(
-                    htmlContent,
-                    // Linklerin tıklanabilir olmasını sağlar
-                    onTapUrl: (url) {
-                      launchUrl(Uri.parse(url));
-                      return true;
-                    },
-                    // Stil ayarları
-                    textStyle: const TextStyle(
-                      fontSize: 16.0,
-                      height: 1.5,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 20.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    child: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.2)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Center(
+                            child: Text(
+                              'Tarih: ${_formatDate(date)}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: SelectionArea(
+                              child: HtmlWidget(
+                                htmlContent,
+                                onTapUrl: (url) {
+                                  launchUrl(Uri.parse(url));
+                                  return true;
+                                },
+                                textStyle: const TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -111,7 +154,6 @@ class BlogDetailPage extends StatelessWidget {
     );
   }
 
-  // Tarih formatlama fonksiyonu (gün/ay/yıl)
   String _formatDate(String date) {
     if (date.isEmpty) return 'Tarih Yok';
     try {

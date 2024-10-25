@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class BlogDetailController extends GetxController {
   final blog = {}.obs;
   var isLoading = false.obs;
+  var title = ''.obs;
 
   @override
   void onInit() {
@@ -22,6 +23,7 @@ class BlogDetailController extends GetxController {
 
       if (result != null) {
         blog.value = result;
+        title.value = blog['title'];
       }
     } catch (e) {
       if (kDebugMode) {

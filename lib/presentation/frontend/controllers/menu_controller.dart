@@ -9,7 +9,7 @@ class TopMenuController extends GetxController {
   final TextEditingController searchController = TextEditingController();
   final FocusNode focusNode = FocusNode();
 
-  final List<String> menuItems = ['Components', 'Sections', 'Templates'];
+  final List<String> menuItems = ['Blog', 'Sesli Blog', 'İletişim'];
 
   @override
   void onClose() {
