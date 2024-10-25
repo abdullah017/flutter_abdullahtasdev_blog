@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_abdullahtasdev_blog/core/network/graphql_service.dart';
 
 class BlogRepository {
@@ -43,7 +44,9 @@ class BlogRepository {
         await _graphqlService.performQuery(query, variables: variables);
 
     if (result.hasException) {
-      print(result.exception.toString());
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
       throw Exception(result.exception.toString());
     }
 
@@ -73,7 +76,9 @@ class BlogRepository {
     final result = await _graphqlService.performQuery(query);
 
     if (result.hasException) {
-      print(result.exception.toString());
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
       return [];
     }
 
@@ -102,7 +107,9 @@ class BlogRepository {
         await _graphqlService.performQuery(query, variables: variables);
 
     if (result.hasException) {
-      print(result.exception.toString());
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
       return null;
     }
 
@@ -128,7 +135,9 @@ class BlogRepository {
     });
 
     if (result.hasException) {
-      print(result.exception.toString());
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
       return null;
     }
 

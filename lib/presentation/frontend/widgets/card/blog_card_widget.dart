@@ -26,7 +26,7 @@ class BlogCard extends StatefulWidget {
   });
 
   @override
-  _BlogCardState createState() => _BlogCardState();
+ State<BlogCard> createState() => _BlogCardState();
 }
 
 class _BlogCardState extends State<BlogCard>

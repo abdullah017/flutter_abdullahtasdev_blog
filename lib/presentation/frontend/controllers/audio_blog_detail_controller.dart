@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_abdullahtasdev_blog/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,9 @@ class AudioBlogDetailController extends GetxController {
       date.value = blog['created_at'];
       audioUrl.value = blog['audio_url'] ?? '';
     } catch (e) {
-      print("Error loading audio blog: $e");
+      if (kDebugMode) {
+        print("Error loading audio blog: $e");
+      }
     } finally {
       isLoading(false);
     }

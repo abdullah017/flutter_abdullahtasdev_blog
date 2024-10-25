@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:waveform_flutter/waveform_flutter.dart'; // waveform_flutter paketini eklediğinizden emin olun
@@ -22,7 +23,7 @@ class AudioBlogCard extends StatefulWidget {
   });
 
   @override
-  _AudioBlogCardState createState() => _AudioBlogCardState();
+  State<AudioBlogCard> createState() => _AudioBlogCardState();
 }
 
 class _AudioBlogCardState extends State<AudioBlogCard>
@@ -84,18 +85,24 @@ class _AudioBlogCardState extends State<AudioBlogCard>
       setState(() {
         isPlayingPreview = true;
       });
-      print('Playing audio from URL: ${widget.audioUrl}');
+      if (kDebugMode) {
+        print('Playing audio from URL: ${widget.audioUrl}');
+      }
       _audioElement?.pause(); // Varolan sesi durdur
       _audioElement = html.AudioElement(widget.audioUrl)
         ..autoplay = true
         ..onEnded.listen((event) {
-          print('Audio playback completed.');
+          if (kDebugMode) {
+            print('Audio playback completed.');
+          }
           setState(() {
             isPlayingPreview = false;
           });
         })
         ..onError.listen((event) {
-          print('Error playing audio.');
+          if (kDebugMode) {
+            print('Error playing audio.');
+          }
           setState(() {
             isPlayingPreview = false;
           });
@@ -121,7 +128,9 @@ class _AudioBlogCardState extends State<AudioBlogCard>
       setState(() {
         isPlayingPreview = false;
       });
-      print('Audio preview stopped.');
+      if (kDebugMode) {
+        print('Audio preview stopped.');
+      }
     }
   }
 
@@ -161,7 +170,7 @@ class _AudioBlogCardState extends State<AudioBlogCard>
                       stopPreview: _stopPreview,
                       audioUrl: widget.audioUrl,
                       isPlayingPreview: isPlayingPreview,
-                      waveformData: [], // wave_flutter paketinde dalga verisi gerekmiyor
+                      waveformData: const [], // wave_flutter paketinde dalga verisi gerekmiyor
                     ),
                   ),
                 ),
@@ -183,7 +192,6 @@ class _FrontCardContent extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.date,
-    super.key,
   });
 
   @override

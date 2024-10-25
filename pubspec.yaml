@@ -31,6 +31,8 @@ dependencies:
   url_launcher:
   flutter_widget_from_html: ^0.15.2
   cached_network_image:
+  just_audio: ^0.9.41
+  universal_html:
 dev_dependencies:
   flutter_test:
     sdk: flutter

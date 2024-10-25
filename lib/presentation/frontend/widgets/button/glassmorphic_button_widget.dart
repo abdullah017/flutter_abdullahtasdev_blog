@@ -12,7 +12,7 @@ class GlassmorphicButton extends StatefulWidget {
   });
 
   @override
-  _GlassmorphicButtonState createState() => _GlassmorphicButtonState();
+  State<GlassmorphicButton> createState() => _GlassmorphicButtonState();
 }
 
 class _GlassmorphicButtonState extends State<GlassmorphicButton> {
