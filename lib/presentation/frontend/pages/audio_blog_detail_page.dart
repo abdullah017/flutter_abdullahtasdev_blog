@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/audioplayer_widget.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/audio_player/audioplayer_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +35,9 @@ class AudioBlogDetailPage extends StatelessWidget {
         try {
           delta = jsonDecode(controller.content.value);
         } catch (e) {
-          print("JSON Parse Hatası: $e");
+          if (kDebugMode) {
+            print("JSON Parse Hatası: $e");
+          }
           delta = []; // Eğer hata oluşursa boş bir liste döndürüyoruz
         }
 

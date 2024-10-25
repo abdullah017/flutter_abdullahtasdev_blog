@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,7 +16,7 @@ class JustAudioPlayerWidget extends StatefulWidget {
   });
 
   @override
-  _JustAudioPlayerWidgetState createState() => _JustAudioPlayerWidgetState();
+  State<JustAudioPlayerWidget> createState() => _JustAudioPlayerWidgetState();
 }
 
 class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
@@ -108,7 +109,9 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
     try {
       await _audioPlayer.setUrl(widget.audioUrl);
     } catch (e) {
-      print('Ses kaynağı ayarlanırken hata oluştu: $e');
+      if (kDebugMode) {
+        print('Ses kaynağı ayarlanırken hata oluştu: $e');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Ses kaynağı yüklenemedi: $e')),
@@ -133,7 +136,9 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
       await _audioPlayer.setSpeed(playbackSpeed);
       await _audioPlayer.play();
     } catch (e) {
-      print('Ses oynatılırken hata oluştu: $e');
+      if (kDebugMode) {
+        print('Ses oynatılırken hata oluştu: $e');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Ses oynatılamadı: $e')),
@@ -146,7 +151,9 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
     try {
       await _audioPlayer.pause();
     } catch (e) {
-      print('Ses durdurulurken hata oluştu: $e');
+      if (kDebugMode) {
+        print('Ses durdurulurken hata oluştu: $e');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Ses durdurulamadı: $e')),
@@ -159,7 +166,9 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
     try {
       await _audioPlayer.seek(newPosition);
     } catch (e) {
-      print('Ses arası pozisyona gidilirken hata oluştu: $e');
+      if (kDebugMode) {
+        print('Ses arası pozisyona gidilirken hata oluştu: $e');
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Ses konumuna gidilemedi: $e')),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/top_menu.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/top_menu/top_menu.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget body;

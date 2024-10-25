@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TopMenu extends StatefulWidget {
   const TopMenu({super.key});
 
   @override
-  _TopMenuState createState() => _TopMenuState();
+  State<TopMenu> createState() => _TopMenuState();
 }
 
 class _TopMenuState extends State<TopMenu> with SingleTickerProviderStateMixin {
@@ -180,7 +181,9 @@ class _TopMenuState extends State<TopMenu> with SingleTickerProviderStateMixin {
                             hintStyle: TextStyle(color: Colors.white70),
                           ),
                           onSubmitted: (value) {
-                            print("Arama yapıldı: $value");
+                            if (kDebugMode) {
+                              print("Arama yapıldı: $value");
+                            }
                             setState(() {
                               _isSearchExpanded = false;
                             });

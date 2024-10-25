@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_abdullahtasdev_blog/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,9 @@ class BlogDetailController extends GetxController {
         blog.value = result;
       }
     } catch (e) {
-      print('Error fetching blog detail: $e');
+      if (kDebugMode) {
+        print('Error fetching blog detail: $e');
+      }
     } finally {
       isLoading(false);
     }
