@@ -3,7 +3,6 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
 
@@ -121,67 +120,72 @@ class TopMenu extends StatelessWidget {
       ),
       const SizedBox(width: 20),
       // Arama Butonu ve Genişleyen Arama Alanı
-      Obx(() => GestureDetector(
-            onTap: () {
-              controller.isSearchExpanded.value =
-                  !controller.isSearchExpanded.value;
-              if (controller.isSearchExpanded.value) {
-                controller.focusNode.requestFocus();
-              } else {
-                controller.focusNode.unfocus();
-              }
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: controller.isSearchExpanded.value ? 200 : 100,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 5),
-                        if (controller.isSearchExpanded.value)
-                          Expanded(
-                            child: TextField(
-                              controller: controller.searchController,
-                              focusNode: controller.focusNode,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Search...',
-                                hintStyle: TextStyle(color: Colors.white70),
-                              ),
-                              onSubmitted: (value) {
-                                if (kDebugMode) {
-                                  print("Search performed: $value");
-                                }
-                                controller.isSearchExpanded.value = false;
-                                if (value.trim().isNotEmpty) {
-                                  Get.to(
-                                      () => SearchResults(query: value.trim()));
-                                }
-                              },
+      Obx(
+        () => GestureDetector(
+          onTap: () {
+            controller.isSearchExpanded.value =
+                !controller.isSearchExpanded.value;
+            if (controller.isSearchExpanded.value) {
+              controller.focusNode.requestFocus();
+            } else {
+              controller.focusNode.unfocus();
+            }
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: controller.isSearchExpanded.value ? 200 : 100,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 5),
+                      if (controller.isSearchExpanded.value)
+                        Expanded(
+                          child: TextField(
+                            controller: controller.searchController,
+                            focusNode: controller.focusNode,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Ara....',
+                              hintStyle: TextStyle(color: Colors.white70),
                             ),
+                            onSubmitted: (value) {
+                              if (kDebugMode) {
+                                print("Search performed: $value");
+                              }
+                              controller.isSearchExpanded.value = false;
+                              if (value.trim().isNotEmpty) {
+                                // Get.to(
+                                //     () => SearchResults(query: value.trim()));
+
+                                Get.toNamed('/arama-sonuclari',
+                                    arguments: {'query': value.trim()});
+                              }
+                            },
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
                 ),
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     ];
   }
 

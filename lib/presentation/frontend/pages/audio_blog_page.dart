@@ -28,7 +28,7 @@ class AudioBlogPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Audio Blogs',
+                      'Sesli Blog',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class AudioBlogPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Listen to our latest audio articles and updates.',
+                      'En son sesli makalelerimizi ve güncellemelerimizi dinleyin.',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white70,
@@ -91,7 +91,7 @@ class AudioBlogPage extends StatelessWidget {
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: Text(
-                      'No audio blogs available.',
+                      'Herhangi bir Sesli Makale bulunamadı!',
                       style: TextStyle(color: Colors.white70, fontSize: 18),
                     ),
                   ),
@@ -122,7 +122,7 @@ class AudioBlogPage extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             opacity: 1.0,
                             child: AudioBlogCard(
-                              //id: audioBlog['id'],
+                              id: audioBlog['id'],
                               title: audioBlog['title'],
                               imageUrl: audioBlog['cover_image'] ??
                                   'https://placekitten.com/400/300',

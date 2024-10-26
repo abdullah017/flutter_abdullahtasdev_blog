@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/search_controller.dart';
 import 'package:intl/intl.dart';
@@ -33,8 +34,7 @@ class SearchResults extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
-                    'https://kingstudio.ro/demos/glass-ui/assets/images/blur.jpg'),
+                image: AssetImage('assets/images/s_bg.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -77,12 +77,15 @@ class SearchResults extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (controller.blogs.isNotEmpty) ...[
-                        const Text(
-                          'Bloglar',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 40.0),
+                          child: Text(
+                            'Bloglar',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -147,7 +150,7 @@ class SearchResults extends StatelessWidget {
     final String? id = item['id']?.toString();
     if (id == null) {
       if (kDebugMode) {
-        print('Blog ID bulunamadı: ${item}');
+        print('Blog ID bulunamadı: $item');
       }
       return const SizedBox
           .shrink(); // Boş bir widget döndürerek hatayı önleyin
@@ -161,9 +164,13 @@ class SearchResults extends StatelessWidget {
         onTap: () {
           // Detay sayfasına navigasyon
           if (isAudio) {
-            Get.toNamed('/audio_blog_detail/$id');
+            Navigation.toAudioBlogDetail(
+                item['title'], int.tryParse(id.toString())!);
+            //Get.toNamed('/audio_blog_detail/$id');
           } else {
-            Get.toNamed('/blog_detail/$id');
+            //Get.toNamed('/blog_detail/$id');
+            Navigation.toBlogDetail(
+                item['title'], int.tryParse(id.toString())!);
           }
         },
         child: Padding(

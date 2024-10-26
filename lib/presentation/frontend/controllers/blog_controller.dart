@@ -47,7 +47,13 @@ class BlogController extends GetxController {
 
       totalCount.value = result['totalCount'];
       var fetchedBlogs = List<Map<String, dynamic>>.from(result['posts']);
+
+      // Eğer backend zaten en yeni makaleleri ilk sırada getiriyorsa addAll doğru olur
       blogs.addAll(fetchedBlogs);
+
+      // Alternatif olarak, fetchedBlogs listesini ters çevirerek en yeniyi başa ekleyebilirsiniz
+      // blogs.insertAll(0, fetchedBlogs);
+
       page++;
 
       if (blogs.length >= totalCount.value) {

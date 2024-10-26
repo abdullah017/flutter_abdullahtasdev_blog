@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   cupertino_icons: ^1.0.8
   get: 
   graphql_flutter:
@@ -35,6 +36,9 @@ dependencies:
   universal_html:
   font_awesome_flutter:
   firebase_auth: ^5.3.1
+  uuid:
+  url_strategy:
+  rename_app: ^1.6.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

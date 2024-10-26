@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/layout/main_layout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -86,10 +88,10 @@ class _ContactPageState extends State<ContactPage>
                                     ),
                                     const SizedBox(width: 40),
                                     // Contact Form
-                                    Expanded(
-                                      flex: 2,
-                                      child: _buildContactForm(),
-                                    ),
+                                    // Expanded(
+                                    //   flex: 2,
+                                    //   child: _buildContactForm(),
+                                    // ),
                                   ],
                                 );
                               } else {
@@ -97,7 +99,7 @@ class _ContactPageState extends State<ContactPage>
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    _buildContactForm(),
+                                    // _buildContactForm(),
                                     const SizedBox(height: 30),
                                     GestureDetector(
                                       onTap: _showPopup,
@@ -123,6 +125,7 @@ class _ContactPageState extends State<ContactPage>
     );
   }
 
+  // ignore: unused_element
   Widget _buildContactForm() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,29 +282,117 @@ class _ContactPageState extends State<ContactPage>
               IconButton(
                 icon:
                     const FaIcon(FontAwesomeIcons.github, color: Colors.black),
-                onPressed: () {
-                  // Implement GitHub redirection
+                onPressed: () async {
+                  try {
+                    // Uygulamanın açılıp açılamayacağını kontrol et
+                    if (await canLaunchUrl(
+                        Uri.parse('github://user?username=abdullah017'))) {
+                      await launchUrl(
+                          Uri.parse('github://user?username=abdullah017'));
+                    } else {
+                      // Uygulama yüklü değilse web tarayıcısında aç
+                      if (await canLaunchUrl(
+                          Uri.parse('https://github.com/abdullah017'))) {
+                        await launchUrl(
+                            Uri.parse('https://github.com/abdullah017'),
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        throw 'Link açılamıyor: GITHUB';
+                      }
+                    }
+                  } catch (e) {
+                    // Hata durumunda kullanıcıya bildirin
+                    if (kDebugMode) {
+                      print(e);
+                    }
+                  }
                 },
               ),
               IconButton(
                 icon: const FaIcon(FontAwesomeIcons.twitter,
                     color: Colors.lightBlue),
-                onPressed: () {
-                  // Implement Twitter redirection
+                onPressed: () async {
+                  try {
+                    // Uygulamanın açılıp açılamayacağını kontrol et
+                    if (await canLaunchUrl(
+                        Uri.parse('twitter://user?screen_name=0abdullahtas'))) {
+                      await launchUrl(
+                          Uri.parse('twitter://user?screen_name=0abdullahtas'));
+                    } else {
+                      // Uygulama yüklü değilse web tarayıcısında aç https://x.com/0abdullahtas
+                      if (await canLaunchUrl(
+                          Uri.parse('https://x.com/0abdullahtas'))) {
+                        await launchUrl(Uri.parse('https://x.com/0abdullahtas'),
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        throw 'Link açılamıyor: X';
+                      }
+                    }
+                  } catch (e) {
+                    // Hata durumunda kullanıcıya bildirin
+                    if (kDebugMode) {
+                      print(e);
+                    }
+                  }
                 },
               ),
               IconButton(
                 icon: const FaIcon(FontAwesomeIcons.instagram,
                     color: Colors.pink),
-                onPressed: () {
-                  // Implement Instagram redirection
+                onPressed: () async {
+                  try {
+                    // Uygulamanın açılıp açılamayacağını kontrol et
+                    if (await canLaunchUrl(
+                        Uri.parse('instagram://user?username=0abdullahtas'))) {
+                      await launchUrl(
+                          Uri.parse('instagram://user?username=0abdullahtas'));
+                    } else {
+                      // Uygulama yüklü değilse web tarayıcısında aç https://www.instagram.com/0abdullahtas/
+                      if (await canLaunchUrl(Uri.parse(
+                          'https://www.instagram.com/0abdullahtas/'))) {
+                        await launchUrl(
+                            Uri.parse(
+                                'https://www.instagram.com/0abdullahtas/'),
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        throw 'Link açılamıyor: INSTAGRAM';
+                      }
+                    }
+                  } catch (e) {
+                    // Hata durumunda kullanıcıya bildirin
+                    if (kDebugMode) {
+                      print(e);
+                    }
+                  }
                 },
               ),
               IconButton(
                 icon: const FaIcon(FontAwesomeIcons.linkedinIn,
                     color: Colors.blueAccent),
-                onPressed: () {
-                  // Implement LinkedIn redirection
+                onPressed: () async {
+                  try {
+                    // Uygulamanın açılıp açılamayacağını kontrol et
+                    if (await canLaunchUrl(
+                        Uri.parse('linkedin://in/abdullahtas'))) {
+                      await launchUrl(Uri.parse('linkedin://in/abdullahtas'));
+                    } else {
+                      // Uygulama yüklü değilse web tarayıcısında aç https://www.linkedin.com/in/abdullahtas/
+                      if (await canLaunchUrl(Uri.parse(
+                          'https://www.linkedin.com/in/abdullahtas/'))) {
+                        await launchUrl(
+                            Uri.parse(
+                                'https://www.linkedin.com/in/abdullahtas/'),
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        throw 'Link açılamıyor: INSTAGRAM';
+                      }
+                    }
+                  } catch (e) {
+                    // Hata durumunda kullanıcıya bildirin
+                    if (kDebugMode) {
+                      print(e);
+                    }
+                  }
                 },
               ),
             ],

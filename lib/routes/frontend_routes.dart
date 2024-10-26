@@ -1,36 +1,66 @@
+// lib/routes/frontend_routes.dart
+
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_utils.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/404_notfound_page.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/audio_blog_detail_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/audio_blog_page.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/blog_detail_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/blog_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/contact_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/blog_detail_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/audio_blog_detail_page.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
 import 'package:get/get.dart';
 
 class FrontendRoutes {
   static final routes = [
     GetPage(
-        name: '/blog',
-        page: () => BlogPage(), // Blog listesi sayfası
-        transition: Transition.noTransition),
-    GetPage(
-        name: '/audio_blog',
-        page: () => AudioBlogPage(), // Sesli blog listesi sayfası
-        transition: Transition.noTransition),
-    GetPage(
-        name: '/contact',
-        page: () => const ContactPage(), // İletişim sayfası
-        transition: Transition.noTransition),
-    GetPage(
-      name: '/blog_detail/:id',
-      page: () => BlogDetailPage(
-        blogId: int.parse(Get.parameters['id']!), // Blog ID'yi URL'den alıyoruz
-      ),
+      name: '/blog',
+      page: () => BlogPage(),
+      transition: Transition.noTransition,
     ),
     GetPage(
-      name: '/audio_blog_detail/:id',
-      page: () => AudioBlogDetailPage(
-        blogId: int.parse(
-            Get.parameters['id']!), // Sesli Blog ID'yi URL'den alıyoruz
-      ),
+      name: '/sesli-blog',
+      page: () => AudioBlogPage(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/iletisim',
+      page: () => const ContactPage(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/blog-detay/:slug',
+      page: () {
+        final slug = Get.parameters['slug']!;
+        final id = SlugUtils.extractIdFromSlug(slug);
+        return BlogDetailPage(blogId: id);
+      },
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/sesli-blog-detay/:slug',
+      page: () {
+        final slug = Get.parameters['slug']!;
+        final id = SlugUtils.extractIdFromSlug(slug);
+        return AudioBlogDetailPage(blogId: id);
+      },
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/arama-sonuclari',
+      page: () {
+        return SearchResults(query: Get.arguments['query']);
+      },
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: '/404',
+      page: () => const NotFoundPage(),
+      transition: Transition.noTransition,
     ),
   ];
+    static final unknownRoute = GetPage(
+    name: '/404',
+    page: () => const NotFoundPage(),
+    transition: Transition.noTransition,
+  );
 }

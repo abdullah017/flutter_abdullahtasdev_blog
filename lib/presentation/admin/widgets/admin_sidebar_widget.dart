@@ -69,7 +69,7 @@ class AdminSidebar extends StatelessWidget {
             title: const Text('Logout', style: TextStyle(color: Colors.white)),
             onTap: () async {
               await FirebaseAuth.instance.signOut();
-              Get.offAll(AdminLoginPage());
+              Get.offAll(const AdminLoginPage());
             },
           ),
         ],

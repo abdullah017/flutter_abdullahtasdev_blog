@@ -23,6 +23,7 @@ class BlogDetailPage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Obx(() => Text(
               controller.title.value,
@@ -107,14 +108,17 @@ class BlogDetailPage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    filter: ImageFilter.blur(
+                        sigmaX: 15, sigmaY: 15), // Blur efektini ayarladık
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color:
+                            Colors.white.withOpacity(0.2), // Opaklığı artırdık
                         borderRadius: BorderRadius.circular(20),
-                        border:
-                            Border.all(color: Colors.white.withOpacity(0.2)),
+                        border: Border.all(
+                            color: Colors.white.withOpacity(
+                                0.3)), // Border opaklığını artırdık
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +130,8 @@ class BlogDetailPage extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: Colors
+                                    .black, // Yazı rengi siyah olarak ayarlandı
                               ),
                             ),
                           ),
@@ -136,7 +141,8 @@ class BlogDetailPage extends StatelessWidget {
                               'Tarih: ${_formatDate(date)}',
                               style: const TextStyle(
                                 fontSize: 14,
-                                color: Colors.black,
+                                color: Colors
+                                    .black, // Yazı rengi siyah olarak ayarlandı
                               ),
                             ),
                           ),
@@ -153,7 +159,8 @@ class BlogDetailPage extends StatelessWidget {
                                 },
                                 textStyle: const TextStyle(
                                   fontSize: 16.0,
-                                  color: Colors.black,
+                                  color: Colors
+                                      .black, // Yazı rengi siyah olarak ayarlandı
                                   height: 1.5,
                                 ),
                               ),

@@ -2,12 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_abdullahtasdev_blog/data/repositories/admin_repositories/post_repositories.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart'; // Resim sıkıştırma paketi
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart'; // Firebase Storage
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:developer' as developer;
+import 'package:uuid/uuid.dart';
 
 class PostAddController extends GetxController {
   final PostRepository postRepository = PostRepository();
@@ -15,46 +16,45 @@ class PostAddController extends GetxController {
   var isLoading = false.obs;
   var isPublished = true.obs;
 
-  // Resim ve ses dosyalarını geçici olarak tutma (web ve mobil için)
-  var coverImage = Rx<File?>(null); // Geçici resim dosyası (mobil/masaüstü)
-  var coverImageBytes = Rx<Uint8List?>(null); // Geçici resim byte'ları (web)
-  var audioFile = Rx<File?>(null); // Geçici ses dosyası (mobil/masaüstü)
-  var audioFileBytes =
-      Rx<Uint8List?>(null); // Geçici ses dosyası byte'ları (web)
+  // Temporary storage for images and audio (web and mobile)
+  var coverImage = Rx<File?>(null);
+  var coverImageBytes = Rx<Uint8List?>(null);
+  var audioFile = Rx<File?>(null);
+  var audioFileBytes = Rx<Uint8List?>(null);
 
-  var coverImageUrl = ''.obs; // Kapak görseli Firebase URL'i
-  var audioUrl = ''.obs; // Ses dosyası Firebase URL'i
+  var coverImageUrl = ''.obs;
+  var audioUrl = ''.obs;
 
-  // Kapak fotoğrafı seçme işlemi
+  // UUID generator
+  final uuid = const Uuid();
+
+  // Pick cover image
   Future<void> pickCoverImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       if (kIsWeb) {
-        // Web platformunda sıkıştırma yapmadan dosyayı kullanıyoruz
         coverImageBytes.value = await pickedFile.readAsBytes();
       } else {
         coverImage.value = File(pickedFile.path);
-        // Mobil ve masaüstü platformlar için sıkıştırma işlemi
         final bytes = await coverImage.value!.readAsBytes();
         final compressedBytes = await _compressImage(bytes);
         if (compressedBytes != null) {
-          coverImageBytes.value =
-              compressedBytes; // Sıkıştırılmış dosya byte'ları
+          coverImageBytes.value = compressedBytes;
         }
       }
     }
   }
 
-  // Resim sıkıştırma fonksiyonu (yalnızca mobil ve masaüstü için)
+  // Compress image (mobile and desktop only)
   Future<Uint8List?> _compressImage(Uint8List imageBytes) async {
     try {
       return await FlutterImageCompress.compressWithList(
         imageBytes,
-        minWidth: 800, // Sıkıştırılmış genişlik
-        minHeight: 600, // Sıkıştırılmış yükseklik
-        quality: 70, // Kalite oranı (0-100)
+        minWidth: 800,
+        minHeight: 600,
+        quality: 70,
       );
     } catch (e) {
       developer.log("Error during image compression: $e");
@@ -62,7 +62,7 @@ class PostAddController extends GetxController {
     }
   }
 
-  // Ses dosyası seçme işlemi (Firebase'e hemen yüklemiyoruz)
+  // Pick audio file
   Future<void> pickAudioFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.audio,
@@ -76,7 +76,7 @@ class PostAddController extends GetxController {
     }
   }
 
-  // Post ekleme işlemi sırasında dosyalar firebase'e yükleniyor
+  // Submit post
   Future<void> submitPost(String title, String content) async {
     isLoading(true);
 
@@ -84,35 +84,31 @@ class PostAddController extends GetxController {
       String? imageUrl;
       String? audioFileUrl;
 
-      // Kapak fotoğrafını firebase'e yükleme (sadece submit sırasında)
+      // Upload cover image
       if (coverImageBytes.value != null || coverImage.value != null) {
         if (kIsWeb) {
-          // Web için byte verilerini yükleme
-          imageUrl = await _uploadBytesToFirebase(
-              coverImageBytes.value!, 'cover_images', 'cover_image.jpg');
+          imageUrl = await _uploadBytesToFirebase(coverImageBytes.value!,
+              'cover_images', 'cover_image_${uuid.v4()}.jpg');
         } else {
-          // Mobil ve masaüstü için dosya yükleme
           imageUrl =
               await _uploadFileToFirebase(coverImage.value!, 'cover_images');
         }
         coverImageUrl.value = imageUrl ?? '';
       }
 
-      // Ses dosyasını firebase'e yükleme (sadece submit sırasında)
+      // Upload audio file
       if (audioFileBytes.value != null || audioFile.value != null) {
         if (kIsWeb) {
-          // Web için byte verilerini yükleme
-          audioFileUrl = await _uploadBytesToFirebase(
-              audioFileBytes.value!, 'audio_files', 'audio_file.mp3');
+          audioFileUrl = await _uploadBytesToFirebase(audioFileBytes.value!,
+              'audio_files', 'audio_file_${uuid.v4()}.mp3');
         } else {
-          // Mobil ve masaüstü için dosya yükleme
           audioFileUrl =
               await _uploadFileToFirebase(audioFile.value!, 'audio_files');
         }
         audioUrl.value = audioFileUrl ?? '';
       }
 
-      // Post kaydetme işlemi (Firebase Storage'da resim ve ses dosyaları yüklendikten sonra)
+      // Save post
       await postRepository.addPost(
         title,
         content,
@@ -120,19 +116,25 @@ class PostAddController extends GetxController {
         isPublished.value,
         audioUrl.value == '' ? null : audioUrl.value,
       );
+
+      Get.snackbar('Success', 'Post added successfully');
+      // Optionally, navigate back or reset fields
     } catch (e) {
       developer.log("Error adding post: $e");
+      Get.snackbar('Error', 'Failed to add post');
     } finally {
       isLoading(false);
     }
   }
 
-  // Firebase'e dosya yükleme (mobil ve masaüstü platformları için)
+  // Upload file to Firebase (mobile and desktop)
   Future<String?> _uploadFileToFirebase(File file, String folderName) async {
     try {
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('$folderName/${file.path.split('/').last}');
+      String extension = file.path.split('.').last;
+      String uniqueFileName = '${uuid.v4()}.$extension';
+
+      final storageRef =
+          FirebaseStorage.instance.ref().child('$folderName/$uniqueFileName');
       final uploadTask = storageRef.putFile(file);
       final snapshot = await uploadTask.whenComplete(() => {});
       return await snapshot.ref.getDownloadURL();
@@ -142,12 +144,13 @@ class PostAddController extends GetxController {
     }
   }
 
-  // Firebase'e byte verileri yükleme (web için)
+  // Upload bytes to Firebase (web)
   Future<String?> _uploadBytesToFirebase(
       Uint8List bytes, String folderName, String fileName) async {
     try {
+      String uniqueFileName = '${uuid.v4()}_$fileName';
       final storageRef =
-          FirebaseStorage.instance.ref().child('$folderName/$fileName');
+          FirebaseStorage.instance.ref().child('$folderName/$uniqueFileName');
       final uploadTask = storageRef.putData(bytes);
       final snapshot = await uploadTask.whenComplete(() => {});
       return await snapshot.ref.getDownloadURL();
@@ -155,10 +158,5 @@ class PostAddController extends GetxController {
       developer.log("Error uploading bytes: $e");
       return null;
     }
-  }
-
-  // Post yayın durumunu değiştir
-  void togglePublishStatus(bool isPublished) {
-    this.isPublished.value = isPublished;
   }
 }

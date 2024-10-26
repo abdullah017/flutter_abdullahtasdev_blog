@@ -12,7 +12,7 @@ class TopMenuController extends GetxController {
   final List<String> menuItems = ['Blog', 'Sesli Blog', 'İletişim'];
 
   // Menü itemleri için rotaları belirliyoruz
-  final List<String> menuRoutes = ['/blog', '/audio_blog', '/contact'];
+  final List<String> menuRoutes = ['/blog', '/sesli-blog', '/iletisim'];
 
   void navigateToPage(int index) {
     selectedIndex.value = index;
@@ -26,6 +26,7 @@ class TopMenuController extends GetxController {
   @override
   void onClose() {
     searchController.dispose();
+    searchController.clear();
     focusNode.dispose();
     super.onClose();
   }
