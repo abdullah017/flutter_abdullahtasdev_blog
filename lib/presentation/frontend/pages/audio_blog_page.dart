@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/card/audio_card_widget.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/layout/main_layout.dart';
 import 'package:get/get.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/audio_blog_controller.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/card/audio_card_widget.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/indicator/loading_indicator.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/layout/main_layout.dart';
 
 class AudioBlogPage extends StatelessWidget {
   final AudioBlogController controller = Get.put(AudioBlogController());
@@ -12,56 +13,156 @@ class AudioBlogPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (controller.audioBlogs.isEmpty) {
-            return const Center(child: Text('No audio blogs available.'));
-          }
-
-          return CustomScrollView(
-            controller: controller.scrollController,
-            slivers: [
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final audioBlog = controller.audioBlogs[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed('/audio_blog_detail/${audioBlog['id']}');
-                      },
-                      child: AudioBlogCard(
-                        title: audioBlog['title'],
-                        imageUrl: audioBlog['cover_image'] ??
-                            'https://placekitten.com/400/300',
-                        audioUrl: audioBlog['audio_url'],
-                        date: audioBlog['created_at'],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.resetAudioBlogs();
+        },
+        child: CustomScrollView(
+          controller: controller.scrollController,
+          slivers: [
+            // Header Sliver
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Audio Blogs',
+                      style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                    );
-                  },
-                  childCount: controller.audioBlogs.length,
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Listen to our latest audio articles and updates.',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
-              if (controller.isLoadingMore.value)
-                const SliverToBoxAdapter(
+            ),
+            // Content Sliver
+            Obx(() {
+              // Initial Loading
+              if (controller.isLoading.value && controller.audioBlogs.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              // Error State
+              if (controller.error.value.isNotEmpty &&
+                  controller.audioBlogs.isEmpty) {
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            controller.error.value,
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {
+                              controller.fetchAudioBlogs();
+                            },
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              // Empty State
+              if (controller.audioBlogs.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Text(
+                      'No audio blogs available.',
+                      style: TextStyle(color: Colors.white70, fontSize: 18),
+                    ),
+                  ),
+                );
+              }
+
+              // Audio Blogs Grid
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 300,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 1,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (index < controller.audioBlogs.length) {
+                        final audioBlog = controller.audioBlogs[index];
+                        return GestureDetector(
+                          key: ValueKey(audioBlog['id']),
+                          onTap: () {
+                            Get.toNamed(
+                                '/audio_blog_detail/${audioBlog['id']}');
+                          },
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: 1.0,
+                            child: AudioBlogCard(
+                              //id: audioBlog['id'],
+                              title: audioBlog['title'],
+                              imageUrl: audioBlog['cover_image'] ??
+                                  'https://placekitten.com/400/300',
+                              audioUrl: audioBlog['audio_url'],
+                              date: audioBlog['created_at'],
+                            ),
+                          ),
+                        );
+                      } else {
+                        // Loading Indicator for Pagination
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20.0),
+                            child: GlassmorphicCircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                    },
+                    childCount: controller.audioBlogs.length +
+                        (controller.isLastPage.value ? 0 : 1),
+                  ),
+                ),
+              );
+            }),
+            // Pagination Loading Indicator (Optional)
+            Obx(() {
+              if (controller.isLoadingMore.value &&
+                  controller.audioBlogs.isNotEmpty) {
+                return const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Center(child: CircularProgressIndicator()),
                   ),
-                ),
-            ],
-          );
-        }),
+                );
+              } else {
+                return const SliverToBoxAdapter(child: SizedBox.shrink());
+              }
+            }),
+          ],
+        ),
       ),
     );
   }
