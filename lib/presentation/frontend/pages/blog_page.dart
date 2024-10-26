@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/blog_controller.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/card/blog_card_widget.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/indicator/loading_indicator.dart';
@@ -91,6 +92,10 @@ class BlogPage extends StatelessWidget {
                 );
               }
 
+              // Blog listesini sıralama (isteğe bağlı)
+              final sortedBlogs = controller.blogs.toList()
+                ..sort((a, b) => b['created_at'].compareTo(a['created_at']));
+
               return SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 sliver: SliverGrid(
@@ -102,12 +107,12 @@ class BlogPage extends StatelessWidget {
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      if (index < controller.blogs.length) {
-                        final blog = controller.blogs[index];
+                      if (index < sortedBlogs.length) {
+                        final blog = sortedBlogs[index];
                         return GestureDetector(
                           key: ValueKey(blog['id']),
                           onTap: () {
-                            Get.toNamed('/blog_detail/${blog['id']}');
+                            Navigation.toBlogDetail(blog['title'], blog['id']);
                           },
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),
@@ -131,7 +136,7 @@ class BlogPage extends StatelessWidget {
                         );
                       }
                     },
-                    childCount: controller.blogs.length +
+                    childCount: sortedBlogs.length +
                         (controller.isLastPage.value ? 0 : 1),
                   ),
                 ),

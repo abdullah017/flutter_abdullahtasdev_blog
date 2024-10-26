@@ -4,13 +4,14 @@ import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/login_page.
 import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_add_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_edit_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_lists_page.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/404_notfound_page.dart';
 import 'package:get/get.dart';
 
 class AdminRoutes {
   static final routes = [
     GetPage(
       name: '/admin-login',
-      page: () => AdminLoginPage(),
+      page: () => const AdminLoginPage(),
     ),
     GetPage(
       name: '/admin',

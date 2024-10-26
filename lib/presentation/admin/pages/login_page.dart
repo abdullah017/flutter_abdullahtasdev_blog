@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AdminLoginPage extends StatefulWidget {
-  const AdminLoginPage({Key? key}) : super(key: key);
+  const AdminLoginPage({super.key});
 
   @override
-  _AdminLoginPageState createState() => _AdminLoginPageState();
+  State<AdminLoginPage> createState() => _AdminLoginPageState();
 }
 
 class _AdminLoginPageState extends State<AdminLoginPage> {

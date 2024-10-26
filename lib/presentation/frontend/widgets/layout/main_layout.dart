@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/top_menu/top_menu.dart';
 import 'package:get/get.dart';
 
@@ -25,8 +24,7 @@ class MainLayout extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
-                    'https://kingstudio.ro/demos/glass-ui/assets/images/blur.jpg'),
+                image: AssetImage('assets/images/bg.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -147,7 +145,7 @@ class MainLayout extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            }),
                             const SizedBox(height: 20),
                             // Arama Alanı
                             Obx(() => GestureDetector(
@@ -200,7 +198,7 @@ class MainLayout extends StatelessWidget {
                                                     decoration:
                                                         const InputDecoration(
                                                       border: InputBorder.none,
-                                                      hintText: 'Search...',
+                                                      hintText: 'Ara...',
                                                       hintStyle: TextStyle(
                                                           color:
                                                               Colors.white70),
@@ -216,10 +214,17 @@ class MainLayout extends StatelessWidget {
                                                       if (value
                                                           .trim()
                                                           .isNotEmpty) {
-                                                        Get.to(() =>
-                                                            SearchResults(
-                                                                query: value
-                                                                    .trim()));
+                                                        Get.toNamed(
+                                                            '/arama-sonuclari',
+                                                            arguments: {
+                                                              'query':
+                                                                  value.trim()
+                                                            });
+                                                        // Get.to(
+                                                        //   () => SearchResults(
+                                                        //     query: value.trim(),
+                                                        //   ),
+                                                        // );
                                                       }
                                                     },
                                                   ),

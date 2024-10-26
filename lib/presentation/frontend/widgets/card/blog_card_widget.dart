@@ -3,9 +3,10 @@ import 'dart:ui'; // Blur efekti için gerekli
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/button/glassmorphic_button_widget.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/indicator/loading_indicator.dart';
-import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
 import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 
@@ -26,7 +27,7 @@ class BlogCard extends StatefulWidget {
   });
 
   @override
- State<BlogCard> createState() => _BlogCardState();
+  State<BlogCard> createState() => _BlogCardState();
 }
 
 class _BlogCardState extends State<BlogCard>
@@ -115,6 +116,7 @@ class _BlogCardState extends State<BlogCard>
                         child: BackCardContent(
                           summary: _convertDeltaToPlainText(widget.summary),
                           blogId: widget.id,
+                          title: widget.title,
                         ),
                       ),
                     ),
@@ -217,11 +219,13 @@ class FrontCardContent extends StatelessWidget {
 class BackCardContent extends StatelessWidget {
   final String summary;
   final int blogId;
+  final String title;
 
   const BackCardContent({
     required this.summary,
     required this.blogId,
     super.key,
+    required this.title,
   });
 
   @override
@@ -265,7 +269,8 @@ class BackCardContent extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     onTap: () {
-                      Get.toNamed('/blog_detail/$blogId');
+                      //Get.toNamed('/blog_detail/$blogId');
+                      Navigation.toBlogDetail(title, blogId);
                     },
                     child: const GlassmorphicButton(
                       text: 'Devamını Oku',

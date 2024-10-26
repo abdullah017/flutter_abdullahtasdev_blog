@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
@@ -11,6 +12,7 @@ class AudioBlogCard extends StatefulWidget {
   final String imageUrl;
   final String date;
   final String audioUrl;
+  final int id;
 
   const AudioBlogCard({
     super.key,
@@ -18,6 +20,7 @@ class AudioBlogCard extends StatefulWidget {
     required this.imageUrl,
     required this.date,
     required this.audioUrl,
+    required this.id,
   });
 
   @override
@@ -123,6 +126,8 @@ class _AudioBlogCardState extends State<AudioBlogCard>
                       stopPreview: _stopPreview,
                       audioUrl: widget.audioUrl,
                       isPlayingPreview: isPlayingPreview,
+                      title: widget.title,
+                      id: widget.id,
                     ),
                   ),
                 ),
@@ -223,11 +228,15 @@ class _BackCardContent extends StatefulWidget {
   final VoidCallback stopPreview;
   final String audioUrl;
   final bool isPlayingPreview;
+  final String title;
+  final int id;
 
   const _BackCardContent({
     required this.stopPreview,
     required this.audioUrl,
     required this.isPlayingPreview,
+    required this.title,
+    required this.id,
   });
 
   @override
@@ -300,8 +309,10 @@ class _BackCardContentState extends State<_BackCardContent> {
                 ElevatedButton(
                   onPressed: () {
                     widget.stopPreview();
-                    Navigator.pushNamed(context, '/audio_blog_detail',
-                        arguments: widget.audioUrl);
+                    // Navigator.pushNamed(context, '/audio_blog_detail',
+                    //     arguments: widget.audioUrl);
+
+                    Navigation.toAudioBlogDetail(widget.title, widget.id);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

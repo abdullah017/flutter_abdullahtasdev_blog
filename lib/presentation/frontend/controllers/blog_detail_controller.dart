@@ -41,8 +41,4 @@ class BlogDetailController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
