@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/login_page.dart';
 import 'package:get/get.dart';
 
 class AdminSidebar extends StatelessWidget {
@@ -65,8 +67,9 @@ class AdminSidebar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app, color: Colors.white),
             title: const Text('Logout', style: TextStyle(color: Colors.white)),
-            onTap: () {
-              // Logout işlemi
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Get.offAll(AdminLoginPage());
             },
           ),
         ],

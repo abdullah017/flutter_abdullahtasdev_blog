@@ -34,6 +34,7 @@ dependencies:
   just_audio: ^0.9.41
   universal_html:
   font_awesome_flutter:
+  firebase_auth: ^5.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
