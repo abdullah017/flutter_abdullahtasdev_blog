@@ -1,9 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
 
 class TopMenu extends StatelessWidget {
   final VoidCallback onMenuToggle;
@@ -19,9 +18,7 @@ class TopMenu extends StatelessWidget {
     return Container(
       height: 70,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
+      decoration: const BoxDecoration(color: Colors.transparent),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: BackdropFilter(
@@ -32,20 +29,11 @@ class TopMenu extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border:
                   Border.all(color: Colors.white.withOpacity(0.3), width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 30,
-                  spreadRadius: 5,
-                  offset: const Offset(0, 5),
-                ),
-              ],
             ),
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Logo
                 const Text(
                   'abdullahtas.dev',
                   style: TextStyle(
@@ -54,7 +42,6 @@ class TopMenu extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                // Menü Öğeleri veya Hamburger İkonu
                 if (!isMobile) ..._buildDesktopMenuItems(),
                 if (isMobile) _buildMobileMenuButton(),
               ],
@@ -65,16 +52,13 @@ class TopMenu extends StatelessWidget {
     );
   }
 
-  /// Masaüstü Görünümü için Menü Öğelerini Oluşturur
   List<Widget> _buildDesktopMenuItems() {
     return [
       Row(
         children: controller.menuItems.map((item) {
           int index = controller.menuItems.indexOf(item);
           return Obx(() => GestureDetector(
-                onTap: () {
-                  controller.selectedIndex.value = index;
-                },
+                onTap: () => controller.navigateToPage(index),
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: AnimatedContainer(
@@ -114,7 +98,6 @@ class TopMenu extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 5),
                         if (controller.selectedIndex.value == index)
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
@@ -195,7 +178,6 @@ class TopMenu extends StatelessWidget {
     ];
   }
 
-  /// Mobil Görünüm için Hamburger Menü Butonunu Oluşturur
   Widget _buildMobileMenuButton() {
     return Obx(() => IconButton(
           icon: Icon(

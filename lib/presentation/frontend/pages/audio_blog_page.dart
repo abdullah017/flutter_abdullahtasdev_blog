@@ -14,46 +14,24 @@ class AudioBlogPage extends StatelessWidget {
     return MainLayout(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Arama alanı
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Search Audio Blog',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              onChanged: (value) {
-                // Arama fonksiyonu burada uygulanabilir
-              },
-            ),
-            const SizedBox(height: 16),
-            // Sesli Blog GridView
-            Expanded(
-              child: Obx(() {
-                if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                if (controller.audioBlogs.isEmpty) {
-                  return const Center(child: Text('No audio blogs available.'));
-                }
+          if (controller.audioBlogs.isEmpty) {
+            return const Center(child: Text('No audio blogs available.'));
+          }
 
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 3 / 4,
-                  ),
-                  itemCount: controller.audioBlogs.length,
-                  itemBuilder: (context, index) {
+          return CustomScrollView(
+            controller: controller.scrollController,
+            slivers: [
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
                     final audioBlog = controller.audioBlogs[index];
                     return GestureDetector(
                       onTap: () {
-                        // Sesli Blog detay sayfasına yönlendirme
                         Get.toNamed('/audio_blog_detail/${audioBlog['id']}');
                       },
                       child: AudioBlogCard(
@@ -65,11 +43,25 @@ class AudioBlogPage extends StatelessWidget {
                       ),
                     );
                   },
-                );
-              }),
-            ),
-          ],
-        ),
+                  childCount: controller.audioBlogs.length,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 1,
+                ),
+              ),
+              if (controller.isLoadingMore.value)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ),
+            ],
+          );
+        }),
       ),
     );
   }

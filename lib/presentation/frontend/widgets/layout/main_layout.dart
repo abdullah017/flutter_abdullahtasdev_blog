@@ -142,7 +142,7 @@ class MainLayout extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            }),
                             const SizedBox(height: 20),
                             // Arama Alanı
                             Obx(() => GestureDetector(
