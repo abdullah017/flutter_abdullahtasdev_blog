@@ -175,4 +175,139 @@ class BlogRepository {
 
     return result.data!['posts_by_pk'];
   }
+
+  // Yazılı blog arama fonksiyonu
+  Future<Map<String, dynamic>> searchBlogs(String query,
+      {int page = 1, int pageSize = 10}) async {
+    String fragment = '''
+    fragment BlogFields on posts {
+      id
+      title
+      cover_image
+      created_at
+      content
+    }
+    ''';
+
+    String searchQuery = '''
+    $fragment
+
+    query SearchPosts(\$offset: Int!, \$limit: Int!, \$search: String!) {
+      posts_aggregate(
+        where: {
+          audio_url: {_is_null: true}, 
+          is_published: {_eq: true},
+          title: {_ilike: \$search}
+        }
+      ) {
+        aggregate {
+          count
+        }
+      }
+      posts(
+        where: {
+          audio_url: {_is_null: true}, 
+          is_published: {_eq: true},
+          title: {_ilike: \$search}
+        }, 
+        limit: \$limit,
+        offset: \$offset
+      ) {
+        ...BlogFields
+      }
+    }
+    ''';
+
+    final variables = {
+      'limit': pageSize,
+      'offset': (page - 1) * pageSize,
+      'search': '%$query%',
+    };
+
+    final result =
+        await _graphqlService.performQuery(searchQuery, variables: variables);
+
+    if (result.hasException) {
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
+      throw Exception(result.exception.toString());
+    }
+
+    final totalCount = result.data!['posts_aggregate']['aggregate']['count'];
+    final posts = result.data!['posts'];
+
+    return {
+      'totalCount': totalCount,
+      'posts': posts,
+    };
+  }
+
+  // Sesli blog arama fonksiyonu
+  Future<Map<String, dynamic>> searchAudioBlogs(String query,
+      {int page = 1, int pageSize = 10}) async {
+    String fragment = '''
+    fragment AudioBlogFields on posts {
+      id
+      title
+      cover_image
+      audio_url
+      created_at
+      content
+    }
+    ''';
+
+    String searchQuery = '''
+    $fragment
+
+    query SearchAudioPosts(\$offset: Int!, \$limit: Int!, \$search: String!) {
+      posts_aggregate(
+        where: {
+          audio_url: {_is_null: false}, 
+          is_published: {_eq: true},
+          title: {_ilike: \$search}
+        }
+      ) {
+        aggregate {
+          count
+        }
+      }
+      posts(
+        where: {
+          audio_url: {_is_null: false}, 
+          is_published: {_eq: true},
+          title: {_ilike: \$search}
+        },
+        limit: \$limit,
+        offset: \$offset
+      ) {
+        ...AudioBlogFields
+      }
+    }
+    ''';
+
+    final variables = {
+      'limit': pageSize,
+      'offset': (page - 1) * pageSize,
+      'search': '%$query%',
+    };
+
+    final result =
+        await _graphqlService.performQuery(searchQuery, variables: variables);
+
+    if (result.hasException) {
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
+      throw Exception(result.exception.toString());
+    }
+
+    final totalCount = result.data!['posts_aggregate']['aggregate']['count'];
+    final posts = result.data!['posts'];
+
+    return {
+      'totalCount': totalCount,
+      'posts': posts,
+    };
+  }
 }

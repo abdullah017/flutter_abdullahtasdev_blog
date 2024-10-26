@@ -1,3 +1,5 @@
+// lib/presentation/frontend/pages/blog_detail_page.dart
+
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
@@ -9,11 +11,15 @@ import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/blog_detail_controller.dart';
 
 class BlogDetailPage extends StatelessWidget {
-  const BlogDetailPage({super.key});
+  final int blogId; // blogId parametresi ekleniyor
+
+  const BlogDetailPage({super.key, required this.blogId});
 
   @override
   Widget build(BuildContext context) {
-    final BlogDetailController controller = Get.put(BlogDetailController());
+    // Controller'ı blogId ile birlikte oluşturuyoruz
+    final BlogDetailController controller =
+        Get.put(BlogDetailController(blogId));
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -66,6 +72,18 @@ class BlogDetailPage extends StatelessWidget {
                       width: double.infinity,
                       height: 300,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: double.infinity,
+                          height: 300,
+                          color: Colors.grey,
+                          child: const Icon(
+                            Icons.broken_image,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                        );
+                      },
                     ),
                   Container(
                     width: double.infinity,

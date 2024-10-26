@@ -5,12 +5,6 @@ import 'package:get/get.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-/*
-  SAYFA GEÇİŞLERİ YAPILACAK
-  ARAMA İŞLEMİ YAPILACAK
-  SESLİ BLOG SAYFASI DÜZENLENECEK
-*/
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -25,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Project',
+      title: 'Abdullahtas.dev',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(), // Light tema
       darkTheme: ThemeData.dark(), // Dark tema

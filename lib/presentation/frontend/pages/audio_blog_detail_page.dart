@@ -103,15 +103,15 @@ class AudioBlogDetailPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // Başlık
-                          Text(
-                            controller.title.value,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                          // Text(
+                          //   controller.title.value,
+                          //   style: const TextStyle(
+                          //     fontSize: 24,
+                          //     fontWeight: FontWeight.bold,
+                          //     color: Colors.white,
+                          //   ),
+                          //   textAlign: TextAlign.center,
+                          // ),
                           const SizedBox(height: 12),
                           // Tarih
                           Text(

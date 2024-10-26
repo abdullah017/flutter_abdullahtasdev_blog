@@ -7,7 +7,7 @@ class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
 
   @override
-  _ContactPageState createState() => _ContactPageState();
+  State<ContactPage> createState() => _ContactPageState();
 }
 
 class _ContactPageState extends State<ContactPage>
@@ -217,13 +217,11 @@ class _ContactPageState extends State<ContactPage>
     // Adjust card size based on screen width
     double avatarRadius = 50;
     double cardWidth = 300;
-    double cardHeight = 500;
 
     if (screenSize.width < 600) {
       // For smaller screens, reduce the size
       avatarRadius = 40;
       cardWidth = screenSize.width * 0.8;
-      cardHeight = 450;
     }
 
     return Container(

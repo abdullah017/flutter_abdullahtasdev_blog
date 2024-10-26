@@ -1,7 +1,10 @@
+// lib/presentation/frontend/layout/main_layout.dart
+
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/top_menu/top_menu.dart';
 import 'package:get/get.dart';
 
@@ -107,6 +110,8 @@ class MainLayout extends StatelessWidget {
                                 onTap: () {
                                   controller.selectedIndex.value = index;
                                   controller.isMenuExpanded.value = false;
+                                  // Navigasyon işlemi ekleyin
+                                  // controller.navigateToPage(index);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
@@ -142,7 +147,7 @@ class MainLayout extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            }),
+                            }).toList(),
                             const SizedBox(height: 20),
                             // Arama Alanı
                             Obx(() => GestureDetector(
@@ -208,6 +213,14 @@ class MainLayout extends StatelessWidget {
                                                       controller
                                                           .isSearchExpanded
                                                           .value = false;
+                                                      if (value
+                                                          .trim()
+                                                          .isNotEmpty) {
+                                                        Get.to(() =>
+                                                            SearchResults(
+                                                                query: value
+                                                                    .trim()));
+                                                      }
                                                     },
                                                   ),
                                                 ),
