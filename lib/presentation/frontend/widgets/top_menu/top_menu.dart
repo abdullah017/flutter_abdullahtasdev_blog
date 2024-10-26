@@ -1,6 +1,9 @@
+// lib/presentation/frontend/widgets/top_menu/top_menu.dart
+
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/menu_controller.dart';
 
@@ -165,6 +168,10 @@ class TopMenu extends StatelessWidget {
                                   print("Search performed: $value");
                                 }
                                 controller.isSearchExpanded.value = false;
+                                if (value.trim().isNotEmpty) {
+                                  Get.to(
+                                      () => SearchResults(query: value.trim()));
+                                }
                               },
                             ),
                           ),

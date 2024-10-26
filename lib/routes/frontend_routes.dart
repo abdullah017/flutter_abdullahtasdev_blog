@@ -21,9 +21,9 @@ class FrontendRoutes {
         transition: Transition.noTransition),
     GetPage(
       name: '/blog_detail/:id',
-      page: () => const BlogDetailPage(
-          // blogId: int.parse(Get.parameters['id']!), // Blog ID'yi URL'den alıyoruz
-          ),
+      page: () => BlogDetailPage(
+        blogId: int.parse(Get.parameters['id']!), // Blog ID'yi URL'den alıyoruz
+      ),
     ),
     GetPage(
       name: '/audio_blog_detail/:id',
