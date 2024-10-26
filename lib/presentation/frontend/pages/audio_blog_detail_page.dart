@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/audio_player/audioplayer_widget.dart';
@@ -11,23 +12,37 @@ import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/au
 class AudioBlogDetailPage extends StatelessWidget {
   final int blogId;
 
-  const AudioBlogDetailPage({
-    super.key,
-    required this.blogId,
-  });
+  const AudioBlogDetailPage({super.key, required this.blogId});
 
   @override
   Widget build(BuildContext context) {
+    // Controller Initialization
     final controller = Get.put(AudioBlogDetailController());
     controller.loadAudioBlog(blogId);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Obx(() => Text(controller.title.value)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Obx(() => Text(
+              controller.title.value,
+              style: const TextStyle(color: Colors.white),
+            )),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        // Check if content is empty
+        if (controller.content.value.isEmpty) {
+          return const Center(
+            child: Text(
+              'İçerik yüklenemedi. Lütfen tekrar deneyin.',
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          );
         }
 
         // Blog içeriği JSON'dan HTML'e dönüştürülüyor
@@ -38,115 +53,124 @@ class AudioBlogDetailPage extends StatelessWidget {
           if (kDebugMode) {
             print("JSON Parse Hatası: $e");
           }
-          delta = []; // Eğer hata oluşursa boş bir liste döndürüyoruz
+          delta = [];
         }
 
-        // `List<Map<String, dynamic>>` formatına dönüştürme
-        List<Map<String, dynamic>> convertedDelta = [];
-        for (var item in delta) {
-          if (item is Map<String, dynamic>) {
-            convertedDelta.add(item);
-          }
-        }
-
+        // Convert JSON Delta to HTML
+        List<Map<String, dynamic>> convertedDelta =
+            delta.whereType<Map<String, dynamic>>().toList();
         final converter = QuillDeltaToHtmlConverter(convertedDelta);
         final htmlContent = converter.convert();
 
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Başlık
-              Text(
-                controller.title.value,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              // Tarih
-              Text(
-                'Tarih: ${_formatDate(controller.date.value)}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // // Blog görseli (varsa)
-              // if (controller.imageUrl.value.isNotEmpty) ...[
-              //   Image.network(controller.imageUrl.value),
-              //   const SizedBox(height: 16),
-              // ],
-
-              // Blog içeriği (HTML formatında gösteriliyor ve seçilebilir)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: HtmlWidget(
-                  htmlContent,
-                  // Metni seçilebilir hale getirir
-
-                  // Linklerin tıklanabilir olmasını sağlar
-                  onTapUrl: (url) {
-                    launchUrl(Uri.parse(url));
-                    return true;
-                  },
-                  // onTapUrl: (url) async {
-                  //   final uri = Uri.parse(url);
-                  //   if (await canLaunchUrl(uri)) {
-                  //     await launchUrl(uri,
-                  //         mode: LaunchMode.externalApplication);
-                  //   } else {
-                  //     // Hata durumu için kullanıcıya bildirim gönderebilirsiniz
-                  //     ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBar(content: Text('Bağlantı açılamadı: $url')),
-                  //     );
-                  //   }
-                  // },
-                  // Stil ayarları
-                  textStyle: const TextStyle(
-                    fontSize: 16.0,
-                    height: 1.5,
+        return Stack(
+          fit: StackFit.expand, // Stack'in tüm alanı kaplamasını sağlar
+          children: [
+            // Arka plan görseli (tam ekran kaplama)
+            Image.network(
+              controller.imageUrl.value.isNotEmpty
+                  ? controller.imageUrl.value
+                  : 'https://placekitten.com/800/400',
+              fit: BoxFit.cover, // Görselin ekranı tamamen kaplamasını sağlar
+              errorBuilder: (context, error, stackTrace) {
+                return Image.network(
+                  'https://placekitten.com/800/400', // Yedek görsel URL'si
+                  fit: BoxFit.cover,
+                );
+              },
+            ),
+            // Arka plan karartma efekti
+            Container(
+              color: Colors.black.withOpacity(0.5),
+            ),
+            // İçerik
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      padding: const EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20.0),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.2),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Başlık
+                          Text(
+                            controller.title.value,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 12),
+                          // Tarih
+                          Text(
+                            'Tarih: ${controller.formatDate(controller.date.value)}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // Blog İçeriği
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: HtmlWidget(
+                              htmlContent,
+                              onTapUrl: (url) {
+                                launchUrl(Uri.parse(url));
+                                return true;
+                              },
+                              textStyle: const TextStyle(
+                                fontSize: 16.0,
+                                height: 1.5,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // Ses Dosyası Başlığı
+                          const Text(
+                            'Ses Dosyası',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // AudioPlayerWidget
+                          if (controller.audioUrl.value.isNotEmpty)
+                            JustAudioPlayerWidget(
+                              audioUrl: controller.audioUrl.value,
+                              albumArtUrl: controller.imageUrl.value,
+                            )
+                          else
+                            const Text(
+                              'Ses dosyası bulunamadı.',
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 16),
-
-              // // Sesli blog oynatıcı
-              // const Text(
-              //   'Ses Dosyası',
-              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              // ),
-              // const SizedBox(height: 8),
-
-              // AudioPlayerWidget'ı Obx içerisinde dinamik olarak güncelle
-              if (controller.audioUrl.value.isNotEmpty)
-                JustAudioPlayerWidget(
-                  audioUrl: controller.audioUrl.value,
-                  albumArtUrl: controller.imageUrl.value,
-                )
-              else
-                const Text('Ses dosyası bulunamadı.'),
-            ],
-          ),
+            ),
+          ],
         );
       }),
     );
-  }
-
-  // Tarih formatlama fonksiyonu (gün/ay/yıl)
-  String _formatDate(String date) {
-    if (date.isEmpty) return 'Tarih Yok';
-    try {
-      final parsedDate = DateTime.parse(date);
-      return '${parsedDate.day.toString().padLeft(2, '0')}.${parsedDate.month.toString().padLeft(2, '0')}.${parsedDate.year}';
-    } catch (e) {
-      return 'Geçersiz Tarih';
-    }
   }
 }

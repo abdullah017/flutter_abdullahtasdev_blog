@@ -33,6 +33,7 @@ dependencies:
   cached_network_image:
   just_audio: ^0.9.41
   universal_html:
+  font_awesome_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -40,4 +41,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+
+  assets:
+    - assets/images/
 
