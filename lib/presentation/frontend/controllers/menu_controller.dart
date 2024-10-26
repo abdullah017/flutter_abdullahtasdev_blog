@@ -11,6 +11,18 @@ class TopMenuController extends GetxController {
 
   final List<String> menuItems = ['Blog', 'Sesli Blog', 'İletişim'];
 
+  // Menü itemleri için rotaları belirliyoruz
+  final List<String> menuRoutes = ['/blog', '/audio_blog', '/contact'];
+
+  void navigateToPage(int index) {
+    selectedIndex.value = index;
+    String route = menuRoutes[index];
+    Get.toNamed(route);
+    if (isMenuExpanded.value) {
+      isMenuExpanded.value = false; // Mobilde menü açık ise kapat
+    }
+  }
+
   @override
   void onClose() {
     searchController.dispose();
