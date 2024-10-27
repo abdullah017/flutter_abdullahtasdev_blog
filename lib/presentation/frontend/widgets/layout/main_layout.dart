@@ -109,7 +109,7 @@ class MainLayout extends StatelessWidget {
                                   controller.selectedIndex.value = index;
                                   controller.isMenuExpanded.value = false;
                                   // Navigasyon işlemi ekleyin
-                                  // controller.navigateToPage(index);
+                                  controller.navigateToPage(index);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(

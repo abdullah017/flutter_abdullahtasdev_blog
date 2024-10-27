@@ -28,9 +28,16 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
   double playbackSpeed = 1.0;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
+  Color waweStartColor = const Color.fromARGB(255, 184, 9, 158);
+  Color waweEndColor = const Color.fromARGB(255, 99, 9, 184);
 
   late AnimationController _iconAnimationController;
   late AnimationController _waveAnimationController;
+
+  // StreamSubscription'ları tanımlayın
+  late final StreamSubscription<PlayerState> _playerStateSubscription;
+  late final StreamSubscription<Duration> _positionSubscription;
+  late final StreamSubscription<Duration?> _durationSubscription;
 
   @override
   void initState() {
@@ -48,7 +55,9 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
       duration: const Duration(seconds: 2),
     );
 
-    _audioPlayer.playerStateStream.listen((state) {
+    // Stream dinleyicilerini başlatın ve Subscription'ları saklayın
+    _playerStateSubscription = _audioPlayer.playerStateStream.listen((state) {
+      if (!mounted) return; // Widget ağaçta değilse setState çağırma
       setState(() {
         isPlaying = state.playing;
         if (isPlaying) {
@@ -61,13 +70,15 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
       });
     });
 
-    _audioPlayer.positionStream.listen((newPosition) {
+    _positionSubscription = _audioPlayer.positionStream.listen((newPosition) {
+      if (!mounted) return;
       setState(() {
         position = newPosition;
       });
     });
 
-    _audioPlayer.durationStream.listen((newDuration) {
+    _durationSubscription = _audioPlayer.durationStream.listen((newDuration) {
+      if (!mounted) return;
       setState(() {
         duration = newDuration ?? Duration.zero;
       });
@@ -81,14 +92,22 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
       if (kDebugMode) {
         print('Ses kaynağı ayarlanırken hata oluştu: $e');
       }
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        SnackBar(content: Text('Ses kaynağı yüklenemedi: $e')),
-      );
+      if (mounted) {
+        // Widget ağaçta olup olmadığını kontrol edin
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ses kaynağı yüklenemedi: $e')),
+        );
+      }
     }
   }
 
   @override
   void dispose() {
+    // StreamSubscription'ları iptal edin
+    _playerStateSubscription.cancel();
+    _positionSubscription.cancel();
+    _durationSubscription.cancel();
+
     _audioPlayer.dispose();
     _iconAnimationController.dispose();
     _waveAnimationController.dispose();
@@ -97,16 +116,12 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
 
   Future<void> _playAudio() async {
     await _audioPlayer.play();
-    setState(() {
-      isPlaying = true;
-    });
+    // setState() burada zaten dinleyicilerden gelecektir, ekstra setState gerekmez
   }
 
   Future<void> _pauseAudio() async {
     await _audioPlayer.pause();
-    setState(() {
-      isPlaying = false;
-    });
+    // setState() burada zaten dinleyicilerden gelecektir, ekstra setState gerekmez
   }
 
   String _formatDuration(Duration d) {
@@ -248,16 +263,16 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
                     return Container(
                       height: 100,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.blueAccent, Colors.blue[100]!],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: CustomPaint(
                         painter: WavePainter(
-                            position, duration, _waveAnimationController.value),
+                            position,
+                            duration,
+                            _waveAnimationController.value,
+                            waweStartColor,
+                            waweEndColor),
                         child: Container(),
                       ),
                     );
@@ -277,8 +292,11 @@ class WavePainter extends CustomPainter {
   final Duration position;
   final Duration duration;
   final double animationValue;
+  final Color startColor; // Gradyan başlangıç rengi
+  final Color endColor; // Gradyan bitiş rengi
 
-  WavePainter(this.position, this.duration, this.animationValue);
+  WavePainter(this.position, this.duration, this.animationValue,
+      this.startColor, this.endColor);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -286,8 +304,13 @@ class WavePainter extends CustomPainter {
 
     double progress = position.inSeconds / duration.inSeconds;
 
+    // Gradyan renk eklemek için Paint içinde Shader kullanımı
     Paint paint = Paint()
-      ..color = Colors.white.withOpacity(0.5)
+      ..shader = LinearGradient(
+        colors: [startColor.withOpacity(0.5), endColor.withOpacity(0.5)],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -314,6 +337,9 @@ class WavePainter extends CustomPainter {
   bool shouldRepaint(covariant WavePainter oldDelegate) {
     return oldDelegate.position != position ||
         oldDelegate.duration != duration ||
-        oldDelegate.animationValue != animationValue;
+        oldDelegate.animationValue != animationValue ||
+        oldDelegate.startColor !=
+            startColor || // Başlangıç rengini kontrol edin
+        oldDelegate.endColor != endColor; // Bitiş rengini kontrol edin
   }
 }
