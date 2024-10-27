@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/audio_blog_controller.dart';
 import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/card/audio_card_widget.dart';
@@ -115,8 +116,8 @@ class AudioBlogPage extends StatelessWidget {
                         return GestureDetector(
                           key: ValueKey(audioBlog['id']),
                           onTap: () {
-                            Get.toNamed(
-                                '/audio_blog_detail/${audioBlog['id']}');
+                            Navigation.toAudioBlogDetail(
+                                audioBlog['title'], audioBlog['id']);
                           },
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 500),

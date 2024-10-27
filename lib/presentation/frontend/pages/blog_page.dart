@@ -38,7 +38,7 @@ class BlogPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Explore our latest articles and updates.',
+                      'En son makalelerimizi ve güncellemelerimizi okuyun.',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white70,

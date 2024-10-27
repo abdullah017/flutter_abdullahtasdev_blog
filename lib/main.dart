@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_abdullahtasdev_blog/firebase_options.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/404_notfound_page.dart';
 import 'package:flutter_abdullahtasdev_blog/routes/app_routes.dart';
 import 'package:flutter_abdullahtasdev_blog/routes/frontend_routes.dart';
 import 'package:get/get.dart';
