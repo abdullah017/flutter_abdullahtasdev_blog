@@ -115,6 +115,45 @@ flutter build web --web-renderer html --release
 Admin sayfasına giriş için **/admin-login** yazmanız gerekmektedir!
 
 
+
+
+## 🤝 Katkıda Bulunma
+
+Projeye katkıda bulunmak isterseniz, pull request gönderebilir veya GitHub Issues bölümünde hata bildiriminde bulunabilirsiniz. Katkılarınızı bekliyoruz!
+
+
+Bir fork yapın.
+Yeni bir branch oluşturun.
+
+```
+git checkout -b feature/ozellik-adi
+```
+Değişikliklerinizi commit edin.
+
+```
+git commit -m 'Özellik ekle: Yeni özellik'
+```
+
+Branch’i gönderin.
+
+```
+git push origin feature/ozellik-adi
+```
+
+Bir pull request açın.
+
+
+📄 Lisans
+
+Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasını inceleyin.
+
+📞 İletişim
+
+Herhangi bir sorunuz veya öneriniz varsa, bizimle iletişime geçmekten çekinmeyin.
+
+
+
+
 # ADMİN EKRAN GÖRÜNTÜLERİ
 
 
