@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_abdullahtasdev_blog/core/network/graphql_service.dart';
+import 'package:abdullahtasdev/core/network/graphql_service.dart';
 
 class BlogRepository {
   final GraphQLService _graphqlService = GraphQLService();

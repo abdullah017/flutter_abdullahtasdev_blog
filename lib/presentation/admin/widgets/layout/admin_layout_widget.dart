@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/widgets/admin_sidebar_widget.dart';
+import 'package:abdullahtasdev/presentation/admin/widgets/admin_sidebar_widget.dart';
 
 class AdminLayout extends StatelessWidget {
   final Widget child; // Her admin sayfası bu child olacak

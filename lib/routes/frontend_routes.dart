@@ -1,13 +1,13 @@
 // lib/routes/frontend_routes.dart
 
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_utils.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/404_notfound_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/audio_blog_detail_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/audio_blog_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/blog_detail_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/blog_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/contact_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/pages/searchresult_page.dart';
+import 'package:abdullahtasdev/core/utils/slug_utils.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/404_notfound_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_detail_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/blog_detail_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/blog_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/contact_page.dart';
+import 'package:abdullahtasdev/presentation/frontend/pages/searchresult_page.dart';
 import 'package:get/get.dart';
 
 class FrontendRoutes {
@@ -34,7 +34,7 @@ class FrontendRoutes {
         final id = SlugUtils.extractIdFromSlug(slug);
         return BlogDetailPage(blogId: id);
       },
-      transition: Transition.noTransition,
+      //transition: Transition.noTransition,
     ),
     GetPage(
       name: '/sesli-blog-detay/:slug',
@@ -43,7 +43,7 @@ class FrontendRoutes {
         final id = SlugUtils.extractIdFromSlug(slug);
         return AudioBlogDetailPage(blogId: id);
       },
-      transition: Transition.noTransition,
+      //transition: Transition.noTransition,
     ),
     GetPage(
       name: '/arama-sonuclari',
@@ -55,12 +55,12 @@ class FrontendRoutes {
     GetPage(
       name: '/404',
       page: () => const NotFoundPage(),
-      transition: Transition.noTransition,
+      //transition: Transition.noTransition,
     ),
   ];
-    static final unknownRoute = GetPage(
+  static final unknownRoute = GetPage(
     name: '/404',
     page: () => const NotFoundPage(),
-    transition: Transition.noTransition,
+    //transition: Transition.noTransition,
   );
 }

@@ -14,7 +14,7 @@ class NotFoundPage extends StatelessWidget {
           // Bulanık arka plan efekti
           Positioned.fill(
             child: Image.asset(
-              'assets/images/dd.jpg', // Gerekirse değiştirin
+              'assets/images/dd.jpg', 
               fit: BoxFit.cover,
               color: Colors.black.withOpacity(0.7),
               colorBlendMode: BlendMode.darken,

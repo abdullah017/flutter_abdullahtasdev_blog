@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
+import 'package:abdullahtasdev/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';

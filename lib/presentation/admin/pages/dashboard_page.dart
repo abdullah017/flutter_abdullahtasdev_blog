@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/controllers/dashboard_controller.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/widgets/admin_sidebar_widget.dart';
+import 'package:abdullahtasdev/presentation/admin/controllers/dashboard_controller.dart';
+import 'package:abdullahtasdev/presentation/admin/widgets/admin_sidebar_widget.dart';
 import 'package:get/get.dart';
 
 class DashboardPage extends StatelessWidget {

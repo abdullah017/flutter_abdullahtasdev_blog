@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
+import 'package:abdullahtasdev/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/audio_blog_controller.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/card/audio_card_widget.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/indicator/loading_indicator.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/layout/main_layout.dart';
+import 'package:abdullahtasdev/presentation/frontend/controllers/audio_blog_controller.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/card/audio_card_widget.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/indicator/loading_indicator.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/layout/main_layout.dart';
 
 class AudioBlogPage extends StatelessWidget {
   final AudioBlogController controller = Get.put(AudioBlogController());

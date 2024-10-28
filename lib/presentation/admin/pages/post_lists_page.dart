@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/controllers/post_controllers.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/controllers/post_edit_controller.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_edit_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/widgets/layout/admin_layout_widget.dart';
+import 'package:abdullahtasdev/presentation/admin/controllers/post_controllers.dart';
+import 'package:abdullahtasdev/presentation/admin/controllers/post_edit_controller.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/post_edit_page.dart';
+import 'package:abdullahtasdev/presentation/admin/widgets/layout/admin_layout_widget.dart';
 import 'package:get/get.dart';
 
 class PostListPage extends StatelessWidget {

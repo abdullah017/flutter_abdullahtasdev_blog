@@ -1,9 +1,9 @@
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/middleware/auth_middleware.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/dashboard_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/login_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_add_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_edit_page.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/pages/post_lists_page.dart';
+import 'package:abdullahtasdev/presentation/admin/middleware/auth_middleware.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/dashboard_page.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/login_page.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/post_add_page.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/post_edit_page.dart';
+import 'package:abdullahtasdev/presentation/admin/pages/post_lists_page.dart';
 import 'package:get/get.dart';
 
 class AdminRoutes {

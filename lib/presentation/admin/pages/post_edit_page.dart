@@ -1,8 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/controllers/post_edit_controller.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/widgets/layout/admin_layout_widget.dart';
+import 'package:abdullahtasdev/presentation/admin/controllers/post_edit_controller.dart';
+import 'package:abdullahtasdev/presentation/admin/widgets/layout/admin_layout_widget.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 
 class PostEditPage extends StatelessWidget {
@@ -171,7 +171,7 @@ class PostEditPage extends StatelessWidget {
                       Get.snackbar('Success', 'Post updated successfully',
                           snackPosition: SnackPosition.BOTTOM);
                       await Future.delayed(const Duration(seconds: 1));
-                      Get.back();
+                      Get.toNamed('/admin');
                     } else {
                       Get.snackbar('Error', 'Failed to update post',
                           snackPosition: SnackPosition.BOTTOM);

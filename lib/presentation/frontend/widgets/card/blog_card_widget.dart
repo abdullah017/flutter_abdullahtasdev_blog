@@ -3,9 +3,9 @@ import 'dart:ui'; // Blur efekti için gerekli
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/button/glassmorphic_button_widget.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/indicator/loading_indicator.dart';
+import 'package:abdullahtasdev/core/utils/slug_navigation.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/button/glassmorphic_button_widget.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/indicator/loading_indicator.dart';
 
 import 'package:intl/intl.dart';
 import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';

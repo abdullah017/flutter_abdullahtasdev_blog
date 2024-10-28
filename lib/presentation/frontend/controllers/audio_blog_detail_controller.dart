@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:flutter_abdullahtasdev_blog/data/repositories/front_repositories/blog_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 
 class AudioBlogDetailController extends GetxController {
   final BlogRepository blogRepository = BlogRepository();
