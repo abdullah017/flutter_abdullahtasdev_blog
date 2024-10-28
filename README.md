@@ -131,10 +131,11 @@ flutter build web --web-renderer html --release
 <img width="333" alt="Ekran Resmi 2024-10-28 17 09 41" src="https://github.com/user-attachments/assets/2228df2f-3657-42f5-bf06-d110e11cdcf2">
 <img width="333" alt="Ekran Resmi 2024-10-28 17 09 35" src="https://github.com/user-attachments/assets/5c39e9a0-7780-4d1b-8d7f-35765f9103a5">
 <img width="333" alt="Ekran Resmi 2024-10-28 17 09 31" src="https://github.com/user-attachments/assets/a0d60a4d-20ca-4984-80a0-cdfa60ed014e">
+<img width="413" alt="Ekran Resmi 2024-10-28 17 14 15" src="https://github.com/user-attachments/assets/98272d9a-0d72-40cb-9288-298183074851">
 <img width="1434" alt="Ekran Resmi 2024-10-28 17 09 03" src="https://github.com/user-attachments/assets/32cf0e66-ab41-41c4-81f7-37f56cc1639a">
 <img width="1434" alt="Ekran Resmi 2024-10-28 17 08 59" src="https://github.com/user-attachments/assets/0321ad52-8978-4c4a-8775-ff5f20027f45">
 <img width="1434" alt="Ekran Resmi 2024-10-28 17 08 55" src="https://github.com/user-attachments/assets/9f60a962-e7ff-4088-ad2d-6597e9e1b918">
-
+<img width="1434" alt="Ekran Resmi 2024-10-28 17 13 58" src="https://github.com/user-attachments/assets/9a769212-b6f8-446b-a3ef-4b7fb2b3649e">
 
 
 
