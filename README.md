@@ -150,13 +150,10 @@ git push origin feature/ozellik-adi
 Bir pull request açın.
 
 
-## 📄 Lisans
-
-Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasını inceleyin.
 
 ## 📞 İletişim
 
-Herhangi bir sorunuz veya öneriniz varsa, bizimle iletişime geçmekten çekinmeyin.
+**Herhangi bir sorunuz veya öneriniz varsa, bizimle iletişime geçmekten çekinmeyin.**
 
 
 
