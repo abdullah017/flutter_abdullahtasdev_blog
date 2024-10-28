@@ -14,32 +14,86 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  get: 
+# State Management
+
+# Flutter için state management ve navigasyon sağlayan hafif ve güçlü bir paket.
+  get:
+
+# GraphQL
+# Flutter uygulamalarında GraphQL API'lerine erişim sağlayan paket, Hasura gibi GraphQL tabanlı API'lerle iletişim kurmak için kullanılır.
   graphql_flutter:
-  firebase_core: ^3.6.0
+
+# Firebase
+# Firebase özelliklerinin kullanılabilmesi için gerekli temel yapılandırma.
+  firebase_core: ^3.6.0 
+# Firebase üzerinde medya dosyalarının depolanması için kullanılır, resim ve ses dosyalarını güvenli bir şekilde saklar.
   firebase_storage:
+# Kullanıcı kimlik doğrulama işlemlerini yönetir, Firebase Authentication ile kullanıcı kayıt ve giriş işlemleri sağlar.
+  firebase_auth:
+
+# Zengin Metin Editörü
+# Zengin metin düzenleme aracı, blog yazılarının oluşturulması ve düzenlenmesi için kullanılır.
   flutter_quill:
-  fl_chart:
-  image_picker:
-  file_picker:
-  audioplayers:
-  flutter_image_compress:
-  intl:
-  waveform_flutter:
+# HTML formatındaki içeriği Quill Delta formatına dönüştürmek için kullanılır.
   flutter_quill_delta_from_html:
-  flutter_html:
+# Quill Delta formatındaki içeriği HTML formatına dönüştürür, zengin metin içeriğini HTML olarak işlemek için kullanılır.
   vsc_quill_delta_to_html:
-  url_launcher:
-  flutter_widget_from_html: ^0.15.2
-  cached_network_image:
+
+# Grafik ve Görselleştirme
+# Grafik ve görselleştirme kütüphanesi, kullanıcı verilerini görselleştirmek veya analiz etmek amacıyla grafik oluşturmak için kullanılır.
+  fl_chart: 
+
+# Medya İşleme
+ # Kullanıcının cihazından fotoğraf ve video seçmesine olanak tanır, blog gönderileri için kapak resmi veya medya eklenmesini sağlar.
+  image_picker:
+  # Dosya seçimi işlemleri için kullanılır, resim, ses, video gibi medya dosyalarının yüklenmesini sağlar.
+  file_picker:
+  # Ses dosyalarını oynatma ve durdurma işlemlerini yönetir, sesli blog içeriklerinin oynatılması için kullanılır.
+  audioplayers:
+   # Diğer ses oynatıcı paketlerine alternatif olarak kullanılır, sesli blog gönderilerinde ses dosyalarını oynatmak için kullanılır.
   just_audio: ^0.9.41
+  # Ses dosyalarının dalga formunu grafik olarak gösterir, sesli içerikler için görsel geri bildirim sağlar.
+  waveform_flutter: 
+   # Büyük boyutlu resim dosyalarının sıkıştırılmasını sağlar, medya yükleme sırasında boyut optimizasyonu yapar.
+  flutter_image_compress:
+   # İnternetten alınan resimlerin cihazda önbelleğe alınmasını sağlar, görüntüleri hızlı bir şekilde yüklemek ve veri tasarrufu sağlamak için kullanılır.
+  cached_network_image:
+
+# HTML İşleme
+# HTML içeriğini doğrudan Flutter widget'larına dönüştürür, HTML formatındaki blog içeriğini uygulamada göstermek için kullanılır.
+  flutter_html:
+  # HTML içeriğini widget'lar ile görüntülemek için kullanılır, HTML yapılarını doğrudan Flutter ortamında göstermek için idealdir.
+  flutter_widget_from_html: ^0.15.2
+   # Tarayıcı uyumlu HTML ve DOM işlevselliği sağlar, web ve masaüstü için HTML ve DOM manipülasyonlarına olanak tanır.
   universal_html:
-  font_awesome_flutter:
-  firebase_auth: ^5.3.1
-  uuid:
+
+# Tarih ve Formatlama
+# Tarih, sayı ve metin formatlama işlemleri için kullanılır, uygulamanın farklı dil ve bölge ayarlarına uyumlu olmasını sağlar.
+  intl: 
+
+# URL İşlemleri
+# Uygulama içinden harici bağlantıları açmak için kullanılır, web sayfalarını veya e-posta istemcilerini başlatır.
+  url_launcher:
+   # Flutter web uygulamalarında URL yapısını "hash" olmadan sağlar, temiz ve SEO dostu URL yapıları oluşturur.
   url_strategy:
+
+
+   # Benzersiz kimlikler (UUID) oluşturur, dosya isimlendirmesi ve veri işleme sırasında çakışmaları önler.
+  uuid:
+
+# Stil ve İkonlar
+# Font Awesome ikonlarını Flutter projelerinde kullanma imkanı sunar, şık ve modern ikon seçenekleri sağlar.
+  font_awesome_flutter:
+
+# Uygulama Yapılandırma
+ # Uygulamanın adını, simgesini ve yapılandırmalarını kolayca değiştirmeye yarayan bir paket, uygulama yayın öncesi özelleştirmeleri hızlandırır.
   rename_app: ^1.6.1
+
+# SEO Optimizasyonu
+ # Meta etiketlerini SEO uyumlu hale getirmek için kullanılır, sayfaların başlık, açıklama ve resim gibi meta bilgilerini dinamik olarak ayarlar.
   meta_seo:
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
