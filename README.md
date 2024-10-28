@@ -71,7 +71,8 @@ flutter pub get
 ```
 ## 3. Firebase CLI Yapılandırması
 
-Firebase CLI ile proje yapılandırması için bu makaleden faydalanabilirsiniz. [Makale için tıklayın]([https://abdullahtas.dev/](https://abdullahtas.medium.com/flutter-firebase-cli-c47deb4447a7))
+Firebase CLI ile proje yapılandırması için bu makaleden faydalanabilirsiniz. [Makaleye gitmek için tıklayın](https://abdullahtas.medium.com/flutter-firebase-cli-c47deb4447a7).
+
 
 Firebase Console üzerinden aktif etmeniz gereken yapılar;
 
