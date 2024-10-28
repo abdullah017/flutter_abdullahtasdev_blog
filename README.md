@@ -112,7 +112,7 @@ flutter build web --web-renderer html --release
 
 ```
 
-
+Admin sayfasına giriş için **/admin-login** yazmanız gerekmektedir!
 
 
 # ADMİN EKRAN GÖRÜNTÜLERİ
