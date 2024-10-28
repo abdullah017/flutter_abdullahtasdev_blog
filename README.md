@@ -1,16 +1,124 @@
-# flutter_abdullahtasdev_blog
+# Abullahtas.dev Web Blog App
 
-A new Flutter project.
+Bu proje, Flutter ile geliştirilen, Firebase ve Hasura destekli bir Blog Platformu web uygulamasıdır. Uygulama, güçlü bir Glassmorphism tasarımına sahip olup, SEO uyumluluğu, GetX ile state management, kullanıcı dostu bir arayüz ve yönetici paneli içerir. Projenin amacı, Flutter Web ile gelişmiş özellikler sunan bir blog platformu oluşturarak web üzerinde etkili bir deneyim sunmaktır.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# 🔗 Demo
+Çalışan uygulamanın demosuna göz atmak için buraya [tıklayın](https://abdullahtas.dev/)
 
-A few resources to get you started if this is your first Flutter project:
+# 📂 Proje Klasör Yapısı
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+root
+├── lib
+│   ├── core
+│   │   ├── network       # API entegrasyonları ve GraphQL yapılandırmaları
+│   │   ├── utils         # Yardımcı işlevler ve genel araçlar
+│   ├── data
+│   │   ├── models        # Veri modelleri (User, Post, etc.)
+│   │   ├── repositories  # Hasura ve Firebase veri işleme sınıfları
+│   ├── presentation
+│   │   ├── admin         # Admin paneli bileşenleri ve sayfaları
+│   │   ├── frontend      # Kullanıcı arayüzüne ait sayfa ve bileşenler
+│   │   ├── controllers   # GetX kontrollü yönetim (Frontend ve Backend)
+│   │   ├── widgets       # Ortak kullanılan widgetlar
+│   ├── themes            # Light ve Dark tema yapılandırması
+│   └── main.dart         # Uygulama başlangıç noktası
+├── assets                # Uygulamada kullanılan medya dosyaları
+└── pubspec.yaml          # Paket bağımlılıkları ve ayarlar
+```
+
+# 🚀 Özellikler
+* **Blog Gönderileri:** Yazılı ve sesli blog gönderileri desteği
+* **Yönetici Paneli:** Blogları yönetme, düzenleme ve silme
+* **Glassmorphism Tasarımı:** Modern ve şeffaf bir kullanıcı arayüzü
+* **SEO Uyumluluğu:** meta_seo paketi ile SEO optimizasyonu
+* **Dark ve Light Mod Desteği:** Kullanıcı deneyimini kişiselleştirme
+* **Mobil ve Web Uyumlu:** Responsiveness ve mobil uyum
+
+# 📦 Kullanılan Paketler
+**GetX:** State management ve navigasyon
+**meta_seo:** SEO optimizasyonu için meta etiket yönetimi
+**firebase_storage:** Firebase depolama
+**file_picker:** Dosya seçici
+**audioplayers:** Sesli blog dosyalarını oynatmak için
+**flutter_quill:** Zengin metin düzenleyici
+**graphql_flutter:** GraphQL sorguları ve Hasura entegrasyonu
+
+
+# 📋 Kurulum
+
+Bu projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları takip edin:
+
+## 1. Projeyi Klonlayın
+
+```
+git clone https://github.com/username/flutter-web-blog-platform.git
+cd flutter-web-blog-platform
+```
+
+## 2. Gerekli Bağımlılıkları Yükleyin
+
+```
+flutter pub get
+```
+## 3. Firebase CLI Yapılandırması
+
+Firebase CLI ile proje yapılandırması için bu makaleden faydalanabilirsiniz. [Makale için tıklayın]([https://abdullahtas.dev/](https://abdullahtas.medium.com/flutter-firebase-cli-c47deb4447a7))
+
+Firebase Console üzerinden aktif etmeniz gereken yapılar;
+
+* Firebase Storage
+* Firebase Auth
+
+## 4. Hasura Ayarları
+Hasura’yı kullanarak SQL sorgularınızı çalıştırabilir ve veritabanı işlemlerinizi yönetebilirsiniz.
+
+GraphQL Uç Noktası: Hasura projenize uygun GraphQL uç noktasını **core/network/graphql_service.dart** dosyasına ekleyin.
+
+Örnek SQL Sorguları: Aşağıdaki sorgular, Hasura veritabanında kullanılan örnek SQL sorgularıdır:
+
+```
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    cover_image VARCHAR(255),
+    audio_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+## 5. Uygulamanın Çalıştırılması
+Projenizi başlatmak için aşağıdaki komutu çalıştırın:
+
+```
+flutter run -d chrome
+```
+
+Projenizi çalıştırdığınızda görsel yüklenme sorunuyla karşılaşırsanız aşağıdaki komut ile çalıştırın:
+
+```
+flutter run -d chrome --web-renderer html
+
+```
+
+Eğer build alıp hosting ile deploy edecekseniz aşağıdaki komutu çalıştırarak build alabilirsiniz:
+
+```
+
+flutter build web --web-renderer html --release
+
+```
+
+
+
+
+# EKRAN GÖRÜNTÜLERİ
+
+
+
+
+
+
