@@ -32,7 +32,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key}); // Firebase servisini initialize etmek için
+  const MyApp({super.key}); 
 
   @override
   Widget build(BuildContext context) {
