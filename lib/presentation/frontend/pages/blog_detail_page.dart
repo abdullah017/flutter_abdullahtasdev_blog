@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/blog_detail_controller.dart';
+import 'package:abdullahtasdev/presentation/frontend/controllers/blog_detail_controller.dart';
 
 class BlogDetailPage extends StatelessWidget {
   final int blogId; // blogId parametresi ekleniyor
@@ -150,18 +150,27 @@ class BlogDetailPage extends StatelessWidget {
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: SelectionArea(
-                              child: HtmlWidget(
-                                htmlContent,
-                                onTapUrl: (url) {
-                                  launchUrl(Uri.parse(url));
-                                  return true;
-                                },
-                                textStyle: const TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors
-                                      .black, // Yazı rengi siyah olarak ayarlandı
-                                  height: 1.5,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: Get.size.width > 600
+                                      ? Get.size.width * 0.6
+                                      : double.infinity,
+                                ),
+                                child: SelectionArea(
+                                  child: HtmlWidget(
+                                    htmlContent,
+                                    onTapUrl: (url) {
+                                      launchUrl(Uri.parse(url));
+                                      return true;
+                                    },
+                                    textStyle: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                      height: 1.5,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_abdullahtasdev_blog/data/repositories/admin_repositories/post_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/admin_repositories/post_repositories.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

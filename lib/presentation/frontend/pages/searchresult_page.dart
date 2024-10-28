@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_navigation.dart';
+import 'package:abdullahtasdev/core/utils/slug_navigation.dart';
 import 'package:get/get.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/search_controller.dart';
+import 'package:abdullahtasdev/presentation/frontend/controllers/search_controller.dart';
 import 'package:intl/intl.dart';
 
 class SearchResults extends StatelessWidget {

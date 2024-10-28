@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/layout/main_layout.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/layout/main_layout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 

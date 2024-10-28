@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/widgets/layout/admin_layout_widget.dart';
+import 'package:abdullahtasdev/presentation/admin/widgets/layout/admin_layout_widget.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:flutter_abdullahtasdev_blog/presentation/admin/controllers/post_add_controller.dart';
+import 'package:abdullahtasdev/presentation/admin/controllers/post_add_controller.dart';
 import 'package:get/get.dart';
 import 'package:audioplayers/audioplayers.dart'; // Ses dosyası çalma için
 
@@ -127,6 +127,7 @@ class PostAddPage extends StatelessWidget {
               )
                   .whenComplete(() {
                 Get.snackbar('Success', 'Post added successfully');
+                Get.toNamed('/admin');
                 //Get.back();
               });
             },

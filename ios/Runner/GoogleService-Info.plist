@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyA-9-otMn7aCL4mnI68XmMv79d0baAMJyE</string>
+	<string>AIzaSyBUIdMWNj1hUpBOH4Jlgz049vDyA2Zb_eU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>937939716634</string>
+	<string>340446130275</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.flutterAbdullahtasdevBlog</string>
 	<key>PROJECT_ID</key>
-	<string>myblogapp-748bd</string>
+	<string>abdullahtasdev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>myblogapp-748bd.appspot.com</string>
+	<string>abdullahtasdev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:937939716634:ios:0cc20b2ca9b70d2a0a1fa3</string>
+	<string>1:340446130275:ios:7bff8fd4db85de2ee38856</string>
 </dict>
 </plist>

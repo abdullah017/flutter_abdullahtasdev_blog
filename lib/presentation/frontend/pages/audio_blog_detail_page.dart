@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/widgets/audio_player/audioplayer_widget.dart';
+import 'package:abdullahtasdev/presentation/frontend/widgets/audio_player/audioplayer_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
-import 'package:flutter_abdullahtasdev_blog/presentation/frontend/controllers/audio_blog_detail_controller.dart';
+import 'package:abdullahtasdev/presentation/frontend/controllers/audio_blog_detail_controller.dart';
 
 class AudioBlogDetailPage extends StatelessWidget {
   final int blogId;

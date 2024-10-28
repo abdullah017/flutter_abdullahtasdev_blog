@@ -1,7 +1,7 @@
 // lib/presentation/frontend/controllers/search_controller.dart
 
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/data/repositories/front_repositories/blog_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 

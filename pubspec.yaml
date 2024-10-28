@@ -1,5 +1,5 @@
-name: flutter_abdullahtasdev_blog
-description: "A new Flutter project."
+name: abdullahtasdev
+description: "Abdullahtas.dev blog, flutter, dart, flutter mobile application, flutter web application, flutter mobil uygulama"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -39,6 +39,7 @@ dependencies:
   uuid:
   url_strategy:
   rename_app: ^1.6.1
+  meta_seo:
 dev_dependencies:
   flutter_test:
     sdk: flutter

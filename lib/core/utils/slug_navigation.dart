@@ -1,6 +1,6 @@
 // lib/utils/navigation.dart
 
-import 'package:flutter_abdullahtasdev_blog/core/utils/slug_utils.dart';
+import 'package:abdullahtasdev/core/utils/slug_utils.dart';
 import 'package:get/get.dart';
 
 class Navigation {

@@ -1,7 +1,7 @@
 // lib/presentation/frontend/controllers/blog_detail_controller.dart
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_abdullahtasdev_blog/data/repositories/front_repositories/blog_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:get/get.dart';
 
 class BlogDetailController extends GetxController {

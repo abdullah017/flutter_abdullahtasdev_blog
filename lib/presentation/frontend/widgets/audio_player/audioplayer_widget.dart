@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 

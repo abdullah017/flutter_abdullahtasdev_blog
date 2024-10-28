@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_abdullahtasdev_blog/data/repositories/admin_repositories/post_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/admin_repositories/post_repositories.dart';
 import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:audioplayers/audioplayers.dart';

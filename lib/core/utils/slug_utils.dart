@@ -1,10 +1,27 @@
-// lib/utils/slug_utils.dart
 
 class SlugUtils {
+  // Türkçe karakterleri İngilizce karşılıklarına dönüştüren harita
+  static final Map<String, String> _turkishCharMap = {
+    'ı': 'i',
+    'ğ': 'g',
+    'ü': 'u',
+    'ş': 's',
+    'ö': 'o',
+    'ç': 'c',
+  };
+
+  // Türkçe karakterleri dönüştürme fonksiyonu
+  static String _replaceTurkishChars(String input) {
+    _turkishCharMap.forEach((turkish, english) {
+      input = input.replaceAll(turkish, english);
+    });
+    return input;
+  }
+
   // Slug oluşturma: başlık ve ID alır, temizler ve birleştirir
   static String createSlug(String title, int id) {
-    // Başlığı küçük harfe çevir
-    String formattedTitle = title.toLowerCase();
+    // Başlığı küçük harfe çevir ve Türkçe karakterleri değiştir
+    String formattedTitle = _replaceTurkishChars(title.toLowerCase());
 
     // Boşlukları ve özel karakterleri '-' ile değiştir
     formattedTitle = formattedTitle.replaceAll(RegExp(r'\s+'), '-');

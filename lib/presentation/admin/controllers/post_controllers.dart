@@ -1,4 +1,4 @@
-import 'package:flutter_abdullahtasdev_blog/data/repositories/admin_repositories/post_repositories.dart';
+import 'package:abdullahtasdev/data/repositories/admin_repositories/post_repositories.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as developer;
 
