@@ -115,7 +115,16 @@ flutter build web --web-renderer html --release
 
 
 
-# EKRAN GÖRÜNTÜLERİ
+# ADMİN EKRAN GÖRÜNTÜLERİ
+
+
+<img width="1434" alt="Ekran Resmi 2024-10-28 16 43 04" src="https://github.com/user-attachments/assets/4d24ed92-d690-4cf1-a17b-29fadae0d70e">
+<img width="1434" alt="Ekran Resmi 2024-10-28 16 42 50" src="https://github.com/user-attachments/assets/017e6f64-657f-41d3-9d53-7239eb61bc16">
+<img width="1434" alt="Ekran Resmi 2024-10-28 16 42 34" src="https://github.com/user-attachments/assets/4ed0f277-c31d-495d-a868-117b438be797">
+<img width="1434" alt="Ekran Resmi 2024-10-28 16 42 28" src="https://github.com/user-attachments/assets/7f4a1d0c-b22d-44ed-b672-80bb5541c8e9">
+
+
+# BLOG EKRAN GÖRÜNTÜLERİ
 
 
 
