@@ -39,11 +39,17 @@ root
 
 # 📦 Kullanılan Paketler
 **GetX:** State management ve navigasyon
+
 **meta_seo:** SEO optimizasyonu için meta etiket yönetimi
+
 **firebase_storage:** Firebase depolama
+
 **file_picker:** Dosya seçici
+
 **audioplayers:** Sesli blog dosyalarını oynatmak için
+
 **flutter_quill:** Zengin metin düzenleyici
+
 **graphql_flutter:** GraphQL sorguları ve Hasura entegrasyonu
 
 
