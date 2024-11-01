@@ -1,46 +1,46 @@
+// lib/presentation/frontend/controllers/audio_blog_detail_controller.dart
+
+import 'package:abdullahtasdev/data/models/audio_blog_model.dart';
+import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 
 class AudioBlogDetailController extends GetxController {
-  final BlogRepository blogRepository = BlogRepository();
+  final BlogRepository blogRepository;
+  final int blogId;
 
-  var title = ''.obs;
-  var content = ''.obs;
-  var imageUrl = ''.obs;
-  var date = ''.obs;
-  var audioUrl = ''.obs;
+  AudioBlogDetailController({
+    required this.blogRepository,
+    required this.blogId,
+  });
+
+  var audioBlog = Rxn<AudioBlog>();
   var isLoading = true.obs;
 
-  Future<void> loadAudioBlog(int blogId) async {
+  @override
+  void onInit() {
+    super.onInit();
+    loadAudioBlog();
+  }
+
+  Future<void> loadAudioBlog() async {
     try {
-      isLoading(true);
-      var blog = await blogRepository.fetchAudioBlogById(blogId);
-      if (blog != null) {
-        title.value = blog['title'];
-        content.value = blog['content'];
-        imageUrl.value = blog['cover_image'] ?? '';
-        date.value = blog['created_at'];
-        audioUrl.value = blog['audio_url'] ?? '';
+      isLoading.value = true;
+      var blogData = await blogRepository.fetchAudioBlogById(blogId);
+      if (blogData != null) {
+        audioBlog.value = AudioBlog.fromJson(blogData);
       } else {
-        throw Exception('Audio blog not found');
+        Get.snackbar('Hata', 'Audio blog bulunamadı.',
+            snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       if (kDebugMode) {
         print("Error loading audio blog: $e");
       }
+      Get.snackbar('Hata', 'Audio blog yüklenemedi.',
+          snackPosition: SnackPosition.BOTTOM);
     } finally {
-      isLoading(false);
-    }
-  }
-
-  String formatDate(String date) {
-    if (date.isEmpty) return 'Tarih Yok';
-    try {
-      final parsedDate = DateTime.parse(date);
-      return '${parsedDate.day.toString().padLeft(2, '0')}.${parsedDate.month.toString().padLeft(2, '0')}.${parsedDate.year}';
-    } catch (e) {
-      return 'Geçersiz Tarih';
+      isLoading.value = false;
     }
   }
 }
