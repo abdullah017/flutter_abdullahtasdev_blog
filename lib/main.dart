@@ -1,3 +1,4 @@
+import 'package:abdullahtasdev/presentation/frontend/bindings/frontend_binding.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:abdullahtasdev/firebase_options.dart';
@@ -32,7 +33,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key}); 
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system, // Sistem temasına göre tema seçimi
         initialRoute: '/blog', // Uygulama açıldığında ilk açılacak sayfa
         getPages: AppRoutes.routes, // Tüm uygulama route'larını yöneten yapı
+        initialBinding: FrontEndBinding(),
         unknownRoute: FrontendRoutes.unknownRoute);
   }
 }

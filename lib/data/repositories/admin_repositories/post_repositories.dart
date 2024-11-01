@@ -1,4 +1,4 @@
-import 'package:abdullahtasdev/core/network/graphql_service.dart';
+import 'package:abdullahtasdev/core/network/graphql_api_service.dart';
 import 'dart:developer' as developer;
 class PostRepository {
   final GraphQLService _graphqlService = GraphQLService();
