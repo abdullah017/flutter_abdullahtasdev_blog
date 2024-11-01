@@ -1,21 +1,23 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:abdullahtasdev/data/models/blog_model.dart';
 import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BlogController extends GetxController {
-  final BlogRepository blogRepository = BlogRepository();
+  final BlogRepository blogRepository;
+  late ScrollController scrollController;
+  Timer? _debounce;
 
   var isLoading = false.obs;
-  var blogs = <Map<String, dynamic>>[].obs;
+  var blogs = <Blog>[].obs;
   var page = 1;
   final int pageSize = 10;
   var totalCount = 0.obs;
   var isLastPage = false.obs;
   var error = ''.obs;
 
-  late ScrollController scrollController;
-  Timer? _debounce;
+  BlogController({required this.blogRepository});
 
   @override
   void onInit() {
@@ -48,11 +50,9 @@ class BlogController extends GetxController {
       totalCount.value = result['totalCount'];
       var fetchedBlogs = List<Map<String, dynamic>>.from(result['posts']);
 
-      // Eğer backend zaten en yeni makaleleri ilk sırada getiriyorsa addAll doğru olur
-      blogs.addAll(fetchedBlogs);
+      var blogList = fetchedBlogs.map((json) => Blog.fromJson(json)).toList();
 
-      // Alternatif olarak, fetchedBlogs listesini ters çevirerek en yeniyi başa ekleyebilirsiniz
-      // blogs.insertAll(0, fetchedBlogs);
+      blogs.addAll(blogList);
 
       page++;
 
