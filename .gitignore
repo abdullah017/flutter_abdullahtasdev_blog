@@ -356,4 +356,7 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/android,swift,visualstudiocode,androidstudio,flutter,dart
+todo.txt
+firebase_options.dart
+
+lib/core/network/graphql_api_service.dart
