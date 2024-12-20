@@ -31,7 +31,7 @@ class DashboardPage extends StatelessWidget {
 
                   // Post istatistikleri
                   Obx(() => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
                         children: [
                           _buildStatCard(
                               'Total Posts',
