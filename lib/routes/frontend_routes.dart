@@ -36,8 +36,9 @@ class FrontendRoutes {
       page: () {
         final slug = Get.parameters['slug']!;
         final id = SlugUtils.extractIdFromSlug(slug);
-        return BlogDetailPage(blogId: id);
+        return const BlogDetailPage();
       },
+      
       //transition: Transition.noTransition,
     ),
     GetPage(
