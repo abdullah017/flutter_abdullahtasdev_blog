@@ -1,8 +1,5 @@
-// lib/presentation/frontend/controllers/blog_detail_controller.dart
-
 import 'package:abdullahtasdev/data/models/blog_model.dart';
 import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class BlogDetailController extends GetxController {
@@ -23,23 +20,17 @@ class BlogDetailController extends GetxController {
     loadBlogDetail();
   }
 
-  void loadBlogDetail() async {
+  Future<void> loadBlogDetail() async {
+    isLoading.value = true;
     try {
-      isLoading.value = true;
       final result = await blogRepository.fetchBlogDetail(blogId);
-
       if (result != null) {
         blog.value = Blog.fromJson(result);
       } else {
-        Get.snackbar('Hata', 'Blog bulunamadı.',
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Error', 'Blog bulunamadı.');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching blog detail: $e');
-      }
-      Get.snackbar('Hata', 'Blog detayları alınamadı.',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'Blog detayları alınamadı.');
     } finally {
       isLoading.value = false;
     }
