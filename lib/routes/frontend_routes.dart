@@ -1,7 +1,9 @@
 // lib/routes/frontend_routes.dart
 
 import 'package:abdullahtasdev/core/utils/slug_utils.dart';
+import 'package:abdullahtasdev/presentation/frontend/bindings/audio_blog_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/blog_binding.dart';
+import 'package:abdullahtasdev/presentation/frontend/bindings/blog_detail_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/contact_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/404_notfound_page.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_detail_page.dart';
@@ -22,7 +24,8 @@ class FrontendRoutes {
     ),
     GetPage(
       name: '/sesli-blog',
-      page: () => AudioBlogPage(),
+      page: () => const AudioBlogPage(),
+      binding: AudioBlogBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
@@ -32,15 +35,17 @@ class FrontendRoutes {
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: '/blog-detay/:slug',
-      page: () {
-        final slug = Get.parameters['slug']!;
-        final id = SlugUtils.extractIdFromSlug(slug);
-        return const BlogDetailPage();
-      },
-      
-      //transition: Transition.noTransition,
-    ),
+        name: '/blog-detay/:slug',
+        page: () => const BlogDetailPage(),
+        binding: BlogDetailBinding()
+        // {
+        //   final slug = Get.parameters['slug']!;
+        //   final id = SlugUtils.extractIdFromSlug(slug);
+        //   return const BlogDetailPage();
+        // },
+
+        //transition: Transition.noTransition,
+        ),
     GetPage(
       name: '/sesli-blog-detay/:slug',
       page: () {
