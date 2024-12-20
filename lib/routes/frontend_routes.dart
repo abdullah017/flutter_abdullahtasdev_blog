@@ -1,6 +1,7 @@
 // lib/routes/frontend_routes.dart
 
 import 'package:abdullahtasdev/core/utils/slug_utils.dart';
+import 'package:abdullahtasdev/presentation/frontend/bindings/blog_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/contact_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/404_notfound_page.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_detail_page.dart';
@@ -15,7 +16,8 @@ class FrontendRoutes {
   static final routes = [
     GetPage(
       name: '/blog',
-      page: () => BlogPage(),
+      page: () => const BlogPage(),
+      binding: BlogBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(

@@ -4,8 +4,10 @@ import 'package:abdullahtasdev/data/repositories/front_repositories/blog_reposit
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class BlogController extends GetxController {
   final BlogRepository blogRepository;
+
   late ScrollController scrollController;
   Timer? _debounce;
 
@@ -32,9 +34,7 @@ class BlogController extends GetxController {
         scrollController.position.maxScrollExtent - 200) {
       if (!isLastPage.value && !isLoading.value) {
         if (_debounce?.isActive ?? false) _debounce!.cancel();
-        _debounce = Timer(const Duration(milliseconds: 200), () {
-          fetchBlogs();
-        });
+        _debounce = Timer(const Duration(milliseconds: 200), fetchBlogs);
       }
     }
   }
@@ -45,15 +45,13 @@ class BlogController extends GetxController {
     try {
       isLoading.value = true;
       error.value = '';
-      var result = await blogRepository.fetchBlogs(page, pageSize);
 
-      totalCount.value = result['totalCount'];
-      var fetchedBlogs = List<Map<String, dynamic>>.from(result['posts']);
-
-      var blogList = fetchedBlogs.map((json) => Blog.fromJson(json)).toList();
+      final result = await blogRepository.fetchBlogs(page, pageSize);
+      final fetchedBlogs = List<Map<String, dynamic>>.from(result['posts']);
+      final blogList = fetchedBlogs.map((json) => Blog.fromJson(json)).toList();
 
       blogs.addAll(blogList);
-
+      totalCount.value = result['totalCount'];
       page++;
 
       if (blogs.length >= totalCount.value) {
