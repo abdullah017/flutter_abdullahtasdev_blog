@@ -1,21 +1,16 @@
-// lib/presentation/frontend/controllers/audio_blog_detail_controller.dart
-
 import 'package:abdullahtasdev/data/models/audio_blog_model.dart';
 import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class AudioBlogDetailController extends GetxController {
   final BlogRepository blogRepository;
   final int blogId;
 
-  AudioBlogDetailController({
-    required this.blogRepository,
-    required this.blogId,
-  });
-
   var audioBlog = Rxn<AudioBlog>();
-  var isLoading = true.obs;
+  var isLoading = false.obs;
+
+  AudioBlogDetailController(
+      {required this.blogRepository, required this.blogId});
 
   @override
   void onInit() {
@@ -26,18 +21,15 @@ class AudioBlogDetailController extends GetxController {
   Future<void> loadAudioBlog() async {
     try {
       isLoading.value = true;
-      var blogData = await blogRepository.fetchAudioBlogById(blogId);
-      if (blogData != null) {
-        audioBlog.value = AudioBlog.fromJson(blogData);
+      final data = await blogRepository.fetchAudioBlogById(blogId);
+      if (data != null) {
+        audioBlog.value = AudioBlog.fromJson(data);
       } else {
-        Get.snackbar('Hata', 'Audio blog bulunamadı.',
+        Get.snackbar('Error', 'Audio blog bulunamadı.',
             snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
-      if (kDebugMode) {
-        print("Error loading audio blog: $e");
-      }
-      Get.snackbar('Hata', 'Audio blog yüklenemedi.',
+      Get.snackbar('Error', 'Audio blog yüklenemedi.',
           snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading.value = false;

@@ -2,6 +2,7 @@
 
 import 'package:abdullahtasdev/core/utils/slug_utils.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/audio_blog_binding.dart';
+import 'package:abdullahtasdev/presentation/frontend/bindings/audio_blog_detail_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/blog_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/blog_detail_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/contact_binding.dart';
@@ -51,8 +52,9 @@ class FrontendRoutes {
       page: () {
         final slug = Get.parameters['slug']!;
         final id = SlugUtils.extractIdFromSlug(slug);
-        return AudioBlogDetailPage(blogId: id);
+        return const AudioBlogDetailPage();
       },
+      binding: AudioBlogDetailBinding(),
       //transition: Transition.noTransition,
     ),
     GetPage(
