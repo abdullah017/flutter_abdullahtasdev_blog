@@ -9,10 +9,10 @@ class GraphQLService {
   GraphQLService._internal() {
     // Sadece HttpLink ile GraphQL bağlantısı
     HttpLink httpLink = HttpLink(
-      'your_hasura_url', // GraphQL URL'inizi buraya yazın
+      'https://vortexsura.softvortex.com/v1/graphql', // GraphQL URL'inizi buraya yazın
       defaultHeaders: {
         'x-hasura-admin-secret':
-            'your_hasura_secret_key', // Buraya Hasura admin secret'ınızı yazın
+            'myadminsecretkey', // Buraya Hasura admin secret'ınızı yazın
       },
     );
 

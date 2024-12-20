@@ -50,6 +50,11 @@ class PostEditPage extends StatelessWidget {
                   controller: controller.quillController,
                   scrollController: ScrollController(),
                   focusNode: FocusNode(),
+                  // scrollable: true,
+                  // padding: EdgeInsets.zero,
+                  // autoFocus: true,
+                  // readOnly: false,
+                  // expands: false,
                 ),
               ),
               quill.QuillToolbar.simple(

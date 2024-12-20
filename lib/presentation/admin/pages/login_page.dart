@@ -41,7 +41,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     } on FirebaseAuthException catch (e) {
       Get.snackbar('Hata', e.message ?? 'Giriş yapılamadı',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent.withOpacity(0.8),
+          backgroundColor: Colors.redAccent,
           colorText: Colors.white);
     } finally {
       setState(() {
@@ -75,8 +75,8 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: Container(
-              color: Colors.black.withOpacity(0.2),
-            ),
+                color: Colors.black.withValues(alpha: 0.2) // 20% opacity
+                ),
           ),
           // Centered Glassmorphic Card
           Center(
@@ -84,10 +84,12 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               width: MediaQuery.of(context).size.width * 0.85,
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20.0),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(
+                    alpha: (0.3),
+                  ),
                   width: 1.5,
                 ),
               ),
@@ -125,7 +127,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             hintText: 'Email',
                             hintStyle: const TextStyle(color: Colors.white70),
                             filled: true,
-                            fillColor: Colors.white.withOpacity(0.3),
+                            fillColor: Colors.white.withValues(
+                              alpha: (0.3),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: BorderSide.none,
@@ -153,7 +157,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             hintText: 'Şifre',
                             hintStyle: const TextStyle(color: Colors.white70),
                             filled: true,
-                            fillColor: Colors.white.withOpacity(0.3),
+                            fillColor: Colors.white.withValues(
+                              alpha: (0.3),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                               borderSide: BorderSide.none,
@@ -173,8 +179,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                                   onPressed: login,
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
-                                    backgroundColor:
-                                        Colors.white.withOpacity(0.3),
+                                    backgroundColor: Colors.white.withValues(
+                                      alpha: (0.3),
+                                    ),
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 15.0),
                                     shape: RoundedRectangleBorder(

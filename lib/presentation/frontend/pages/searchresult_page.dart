@@ -68,7 +68,7 @@ class SearchResults extends StatelessWidget {
 
   Widget _buildOverlay() {
     return Container(
-      color: Colors.black.withOpacity(0.3),
+      color: Colors.black.withValues(alpha:(0.3),),
     );
   }
 
@@ -77,7 +77,7 @@ class SearchResults extends StatelessWidget {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
       child: Container(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha:(0.2),),
         child: Obx(() {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
@@ -227,7 +227,7 @@ class SearchResults extends StatelessWidget {
     }
 
     return Card(
-      color: Colors.white.withOpacity(0.1),
+      color: Colors.white.withValues(alpha:(0.1),),
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
@@ -301,7 +301,7 @@ class SearchResults extends StatelessWidget {
       width: 60,
       height: 60,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.3),
+        color: Colors.white.withValues(alpha:(0.3),),
         borderRadius: BorderRadius.circular(10),
       ),
       child: const Icon(

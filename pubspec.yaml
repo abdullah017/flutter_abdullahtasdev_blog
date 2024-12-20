@@ -33,7 +33,7 @@ dependencies:
 
 # Zengin Metin Editörü
 # Zengin metin düzenleme aracı, blog yazılarının oluşturulması ve düzenlenmesi için kullanılır.
-  flutter_quill:
+  flutter_quill: ^10.8.5
 # HTML formatındaki içeriği Quill Delta formatına dönüştürmek için kullanılır.
   flutter_quill_delta_from_html:
 # Quill Delta formatındaki içeriği HTML formatına dönüştürür, zengin metin içeriğini HTML olarak işlemek için kullanılır.

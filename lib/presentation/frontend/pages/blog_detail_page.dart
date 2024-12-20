@@ -99,8 +99,8 @@ class BlogDetailPage extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.black.withOpacity(0.3),
-                Colors.black.withOpacity(0.5),
+                Colors.black.withValues(alpha:(0.3),),
+                Colors.black.withValues(alpha:(0.5),),
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -115,10 +115,10 @@ class BlogDetailPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha:(0.2),),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha:(0.3),),
         ),
       ),
       child: Column(

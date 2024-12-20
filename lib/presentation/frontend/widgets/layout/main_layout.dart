@@ -65,7 +65,9 @@ class MainLayout extends StatelessWidget {
                       controller.isMenuExpanded.value = false;
                     },
                     child: Container(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withValues(
+                        alpha: (0.5),
+                      ),
                     ),
                   ),
                 ),
@@ -79,16 +81,23 @@ class MainLayout extends StatelessWidget {
                   child: Container(
                     width: 250,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(
+                        alpha: (0.2),
+                      ),
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(20),
                         bottomRight: Radius.circular(20),
                       ),
                       border: Border.all(
-                          color: Colors.white.withOpacity(0.3), width: 2),
+                          color: Colors.white.withValues(
+                            alpha: (0.3),
+                          ),
+                          width: 2),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withValues(
+                            alpha: (0.05),
+                          ),
                           blurRadius: 30,
                           spreadRadius: 5,
                           offset: const Offset(0, 5),
@@ -122,7 +131,9 @@ class MainLayout extends StatelessWidget {
                                         color: controller.selectedIndex.value ==
                                                 index
                                             ? Colors.white
-                                            : Colors.white.withOpacity(0.6),
+                                            : Colors.white.withValues(
+                                                alpha: (0.6),
+                                              ),
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
@@ -134,11 +145,13 @@ class MainLayout extends StatelessWidget {
                                                       index
                                                   ? FontWeight.bold
                                                   : FontWeight.normal,
-                                          color: controller
-                                                      .selectedIndex.value ==
-                                                  index
-                                              ? Colors.white
-                                              : Colors.white.withOpacity(0.8),
+                                          color:
+                                              controller.selectedIndex.value ==
+                                                      index
+                                                  ? Colors.white
+                                                  : Colors.white.withValues(
+                                                      alpha: (0.8),
+                                                    ),
                                         ),
                                       ),
                                     ],
@@ -167,7 +180,9 @@ class MainLayout extends StatelessWidget {
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 20),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withValues(
+                                        alpha: (0.2),
+                                      ),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: ClipRRect(

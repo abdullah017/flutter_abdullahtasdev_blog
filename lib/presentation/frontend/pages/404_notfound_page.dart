@@ -14,9 +14,11 @@ class NotFoundPage extends StatelessWidget {
           // Bulanık arka plan efekti
           Positioned.fill(
             child: Image.asset(
-              'assets/images/dd.jpg', 
+              'assets/images/dd.jpg',
               fit: BoxFit.cover,
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(
+                alpha: (0.7),
+              ),
               colorBlendMode: BlendMode.darken,
             ),
           ),
@@ -30,11 +32,15 @@ class NotFoundPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 150,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white.withOpacity(0.15),
+                    color: Colors.white.withValues(
+                      alpha: (0.15),
+                    ),
                     shadows: [
                       Shadow(
                         blurRadius: 10,
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(
+                          alpha: (0.3),
+                        ),
                         offset: const Offset(0, 0),
                       ),
                     ],
@@ -47,7 +53,9 @@ class NotFoundPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(
+                      alpha: (0.9),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -62,11 +70,15 @@ class NotFoundPage extends StatelessWidget {
                           horizontal: 40,
                           vertical: 15,
                         ),
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: Colors.white.withValues(
+                          alpha: (0.2),
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                           side: BorderSide(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(
+                              alpha: (0.3),
+                            ),
                           ),
                         ),
                         elevation: 0,

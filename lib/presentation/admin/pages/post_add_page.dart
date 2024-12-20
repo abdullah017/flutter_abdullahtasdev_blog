@@ -33,6 +33,7 @@ class PostAddPage extends StatelessWidget {
           Expanded(
             child: quill.QuillEditor.basic(
               controller: contentController,
+            
             ),
           ),
           quill.QuillToolbar.simple(controller: contentController),
