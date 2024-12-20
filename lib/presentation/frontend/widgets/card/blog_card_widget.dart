@@ -151,7 +151,7 @@ class FrontCardContent extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
+        border: Border.all(color: Colors.white.withValues(alpha:(0.2)), width: 2),
         gradient: const LinearGradient(
           colors: [
             Color.fromRGBO(255, 255, 255, 0.1),
@@ -233,7 +233,7 @@ class BackCardContent extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
+        border: Border.all(color: Colors.white.withValues(alpha:(0.2)), width: 2),
         gradient: const LinearGradient(
           colors: [
             Color.fromRGBO(255, 255, 255, 0.1),

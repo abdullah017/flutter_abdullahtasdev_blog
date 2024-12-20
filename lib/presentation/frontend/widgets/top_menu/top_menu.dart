@@ -27,10 +27,15 @@ class TopMenu extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(
+                alpha: (0.2),
+              ),
               borderRadius: BorderRadius.circular(20),
-              border:
-                  Border.all(color: Colors.white.withOpacity(0.3), width: 2),
+              border: Border.all(
+                  color: Colors.white.withValues(
+                    alpha: (0.3),
+                  ),
+                  width: 2),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Row(
@@ -82,7 +87,9 @@ class TopMenu extends StatelessWidget {
                               size: 18,
                               color: controller.selectedIndex.value == index
                                   ? Colors.white
-                                  : Colors.white.withOpacity(0.6),
+                                  : Colors.white.withValues(
+                                      alpha: (0.6),
+                                    ),
                             ),
                             const SizedBox(width: 5),
                             Text(
@@ -95,7 +102,9 @@ class TopMenu extends StatelessWidget {
                                         : FontWeight.normal,
                                 color: controller.selectedIndex.value == index
                                     ? Colors.white
-                                    : Colors.white.withOpacity(0.8),
+                                    : Colors.white.withValues(
+                                        alpha: (0.8),
+                                      ),
                               ),
                             ),
                           ],
@@ -136,7 +145,9 @@ class TopMenu extends StatelessWidget {
             width: controller.isSearchExpanded.value ? 200 : 100,
             height: 40,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(
+                alpha: (0.2),
+              ),
               borderRadius: BorderRadius.circular(15),
             ),
             child: ClipRRect(

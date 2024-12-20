@@ -64,10 +64,10 @@ class _ContactPageState extends State<ContactPage>
                         child: Container(
                           padding: const EdgeInsets.all(20.0),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha:(0.2),),
                             borderRadius: BorderRadius.circular(20.0),
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha:(0.3),),
                               width: 1.5,
                             ),
                           ),
@@ -153,7 +153,7 @@ class _ContactPageState extends State<ContactPage>
             labelText: 'Adınız',
             labelStyle: const TextStyle(color: Colors.white),
             filled: true,
-            fillColor: Colors.white.withOpacity(0.3),
+            fillColor: Colors.white.withValues(alpha:(0.3),),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: BorderSide.none,
@@ -167,7 +167,7 @@ class _ContactPageState extends State<ContactPage>
             labelText: 'E-posta',
             labelStyle: const TextStyle(color: Colors.white),
             filled: true,
-            fillColor: Colors.white.withOpacity(0.3),
+            fillColor: Colors.white.withValues(alpha:(0.3),),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: BorderSide.none,
@@ -182,7 +182,7 @@ class _ContactPageState extends State<ContactPage>
             labelText: 'Mesajınız',
             labelStyle: const TextStyle(color: Colors.white),
             filled: true,
-            fillColor: Colors.white.withOpacity(0.3),
+            fillColor: Colors.white.withValues(alpha:(0.3),),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: BorderSide.none,
@@ -196,7 +196,7 @@ class _ContactPageState extends State<ContactPage>
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Colors.white.withOpacity(0.3),
+              backgroundColor: Colors.white.withValues(alpha:(0.3),),
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -231,10 +231,10 @@ class _ContactPageState extends State<ContactPage>
       width: cardWidth,
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha:(0.2),),
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha:(0.3),),
           width: 1.5,
         ),
       ),
@@ -402,7 +402,7 @@ class _ContactPageState extends State<ContactPage>
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Colors.white.withOpacity(0.3),
+              backgroundColor: Colors.white.withValues(alpha:(0.3),),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -436,7 +436,7 @@ class _ContactPageState extends State<ContactPage>
                 width: screenSize.width,
                 height: screenSize.height,
                 color: Colors.black
-                    .withOpacity(0.5), // Semi-transparent background
+                    .withValues(alpha:(0.5),), // Semi-transparent background
                 child: Center(
                   child: GestureDetector(
                     onTap:
@@ -453,10 +453,10 @@ class _ContactPageState extends State<ContactPage>
                             width: popupWidth,
                             padding: const EdgeInsets.all(20.0),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha:(0.2),),
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.3),
+                                color: Colors.white.withValues(alpha:(0.3),),
                                 width: 1.5,
                               ),
                             ),
@@ -489,7 +489,7 @@ class _ContactPageState extends State<ContactPage>
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.white,
                                       backgroundColor:
-                                          Colors.white.withOpacity(0.3),
+                                          Colors.white.withValues(alpha:(0.3),),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 40, vertical: 15),
                                       shape: RoundedRectangleBorder(

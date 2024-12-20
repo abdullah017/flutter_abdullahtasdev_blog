@@ -141,9 +141,13 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
           child: Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
+              color: Colors.white.withValues(
+                alpha: (0.15),
+              ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: (0.2)),
+              ),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -306,7 +310,10 @@ class WavePainter extends CustomPainter {
     // Gradyan renk eklemek için Paint içinde Shader kullanımı
     Paint paint = Paint()
       ..shader = LinearGradient(
-        colors: [startColor.withOpacity(0.5), endColor.withOpacity(0.5)],
+        colors: [
+          startColor.withValues(alpha: (0.5)),
+          endColor.withValues(alpha: (0.5))
+        ],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))

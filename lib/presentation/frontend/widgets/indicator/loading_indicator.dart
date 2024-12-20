@@ -13,13 +13,13 @@ class GlassmorphicCircularProgressIndicator extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.white.withValues(alpha:(0.2),),
             width: 2,
           ),
           gradient: LinearGradient(
             colors: [
-              Colors.white.withOpacity(0.1),
-              const Color.fromARGB(255, 255, 255, 255).withOpacity(0.05)
+              Colors.white.withValues(alpha:(0.1),),
+              const Color.fromARGB(255, 255, 255, 255).withValues(alpha:(0.05)),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -32,7 +32,7 @@ class GlassmorphicCircularProgressIndicator extends StatelessWidget {
             child: Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.white.withOpacity(0.8)),
+                    Colors.white.withValues(alpha:(0.8))),
                 strokeWidth: 3,
               ),
             ),
