@@ -1,6 +1,7 @@
 // lib/routes/frontend_routes.dart
 
 import 'package:abdullahtasdev/core/utils/slug_utils.dart';
+import 'package:abdullahtasdev/presentation/frontend/bindings/contact_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/404_notfound_page.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_detail_page.dart';
 import 'package:abdullahtasdev/presentation/frontend/pages/audio_blog_page.dart';
@@ -24,7 +25,8 @@ class FrontendRoutes {
     ),
     GetPage(
       name: '/iletisim',
-      page: () => const ContactPage(),
+      page: () => ContactPage(),
+      binding: ContactBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
