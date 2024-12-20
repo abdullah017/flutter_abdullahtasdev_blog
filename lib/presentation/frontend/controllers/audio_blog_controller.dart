@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:abdullahtasdev/data/repositories/front_repositories/blog_repositories.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AudioBlogController extends GetxController {
-  final BlogRepository blogRepository = BlogRepository();
+  final BlogRepository blogRepository;
+
+  AudioBlogController({required this.blogRepository});
 
   // Reactive variables
   var isLoading = false.obs;
@@ -33,9 +34,7 @@ class AudioBlogController extends GetxController {
         scrollController.position.maxScrollExtent - 200) {
       if (!isLastPage.value && !isLoading.value && !isLoadingMore.value) {
         if (_debounce?.isActive ?? false) _debounce!.cancel();
-        _debounce = Timer(const Duration(milliseconds: 200), () {
-          fetchAudioBlogs();
-        });
+        _debounce = Timer(const Duration(milliseconds: 200), fetchAudioBlogs);
       }
     }
   }
@@ -44,20 +43,15 @@ class AudioBlogController extends GetxController {
     if (isLastPage.value || isLoading.value || isLoadingMore.value) return;
 
     try {
-      if (page == 1) {
-        isLoading.value = true;
-      } else {
-        isLoadingMore.value = true;
-      }
+      isLoading.value = true;
       error.value = '';
-
-      // Use the updated repository method with pagination
-      var result =
+      final result =
           await blogRepository.fetchAudioBlogsPaginated(page, pageSize);
+      final fetchedAudioBlogs =
+          List<Map<String, dynamic>>.from(result['posts']);
 
-      totalCount.value = result['totalCount'];
-      var fetchedAudioBlogs = List<Map<String, dynamic>>.from(result['posts']);
       audioBlogs.addAll(fetchedAudioBlogs);
+      totalCount.value = result['totalCount'];
       page++;
 
       if (audioBlogs.length >= totalCount.value) {
@@ -65,9 +59,6 @@ class AudioBlogController extends GetxController {
       }
     } catch (e) {
       error.value = 'Failed to load audio blogs. Please try again.';
-      if (kDebugMode) {
-        print(e.toString());
-      }
     } finally {
       isLoading.value = false;
       isLoadingMore.value = false;
