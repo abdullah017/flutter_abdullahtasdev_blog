@@ -31,7 +31,7 @@ class FrontendRoutes {
     ),
     GetPage(
       name: '/iletisim',
-      page: () => ContactPage(),
+      page: () => const ContactPage(),
       binding: ContactBinding(),
       transition: Transition.noTransition,
     ),
@@ -60,7 +60,7 @@ class FrontendRoutes {
     GetPage(
       name: '/arama-sonuclari',
       page: () {
-        return SearchResults(query: Get.arguments['query']);
+        return SearchResultPage(query: Get.arguments['query']);
       },
       transition: Transition.noTransition,
     ),
