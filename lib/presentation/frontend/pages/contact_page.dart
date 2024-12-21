@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 
 class ContactPage extends GetView<ContactController> {
-  ContactPage({Key? key}) : super(key: key);
+  const ContactPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class ContactPage extends GetView<ContactController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (screenSize.width > 800)
-                      Row(
+                      const Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Expanded(
                             flex: 1,
                             child: UserCard(),
@@ -42,9 +42,9 @@ class ContactPage extends GetView<ContactController> {
                         ],
                       )
                     else
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                          // ContactForm(),
                           SizedBox(height: 30),
                           UserCard(),

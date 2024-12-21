@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PopupOverlay extends StatelessWidget {
   final VoidCallback onClose;
 
-  const PopupOverlay({Key? key, required this.onClose}) : super(key: key);
+  const PopupOverlay({super.key, required this.onClose});
 
   @override
   Widget build(BuildContext context) {
