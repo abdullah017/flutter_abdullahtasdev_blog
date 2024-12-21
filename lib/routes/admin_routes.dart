@@ -1,4 +1,5 @@
 import 'package:abdullahtasdev/presentation/admin/bindings/dashboard_binding.dart';
+import 'package:abdullahtasdev/presentation/admin/bindings/post_list_binding.dart';
 import 'package:abdullahtasdev/presentation/admin/middleware/auth_middleware.dart';
 import 'package:abdullahtasdev/presentation/admin/pages/dashboard_page.dart';
 import 'package:abdullahtasdev/presentation/admin/pages/login_page.dart';
@@ -21,7 +22,8 @@ class AdminRoutes {
     ),
     GetPage(
       name: '/admin/posts',
-      page: () => PostListPage(),
+      page: () => const PostListsPage(),
+      binding: PostListBinding(),
       middlewares: [AuthMiddleware()], // Yazıların listelendiği sayfa
     ),
     GetPage(
