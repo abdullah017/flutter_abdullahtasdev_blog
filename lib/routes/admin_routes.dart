@@ -1,3 +1,4 @@
+import 'package:abdullahtasdev/presentation/admin/bindings/dashboard_binding.dart';
 import 'package:abdullahtasdev/presentation/admin/middleware/auth_middleware.dart';
 import 'package:abdullahtasdev/presentation/admin/pages/dashboard_page.dart';
 import 'package:abdullahtasdev/presentation/admin/pages/login_page.dart';
@@ -14,7 +15,8 @@ class AdminRoutes {
     ),
     GetPage(
       name: '/admin',
-      page: () => DashboardPage(),
+      page: () => const DashboardPage(),
+      binding: AdminDashboardBinding(),
       middlewares: [AuthMiddleware()], // Admin panel ana sayfası
     ),
     GetPage(

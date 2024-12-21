@@ -120,7 +120,7 @@ class _JustAudioPlayerWidgetState extends State<JustAudioPlayerWidget>
 
   Future<void> _pauseAudio() async {
     await _audioPlayer.pause();
-    // setState() burada zaten dinleyicilerden gelecektir, ekstra setState gerekmez
+  
   }
 
   String _formatDuration(Duration d) {
