@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardPage extends GetView<DashboardController> {
-  const DashboardPage({Key? key}) : super(key: key);
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

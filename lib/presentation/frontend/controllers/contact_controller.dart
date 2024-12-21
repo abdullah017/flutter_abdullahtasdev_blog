@@ -8,6 +8,6 @@ class ContactController extends GetxController {
 
   void sendContactForm(String name, String email, String message) {
     // Add your form submission logic here
-    print('Name: $name, Email: $email, Message: $message');
+    // print('Name: $name, Email: $email, Message: $message');
   }
 }

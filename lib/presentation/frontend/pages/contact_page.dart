@@ -4,9 +4,8 @@ import 'package:abdullahtasdev/presentation/frontend/widgets/popup/popup_overlay
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class ContactPage extends GetView<ContactController> {
-  const ContactPage({Key? key}) : super(key: key);
+  const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class ContactPage extends GetView<ContactController> {
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                         // ContactForm(),
+                          // ContactForm(),
                           SizedBox(height: 30),
                           UserCard(),
                         ],
