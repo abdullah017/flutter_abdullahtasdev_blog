@@ -2,12 +2,14 @@ import 'package:abdullahtasdev/data/repositories/admin_repositories/post_reposit
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
-  final PostRepository postRepository = PostRepository();
+  final PostRepository postRepository;
+
+  DashboardController({required this.postRepository});
 
   var totalPosts = 0.obs;
   var publishedPosts = 0.obs;
   var draftPosts = 0.obs;
-  var latestPosts = <dynamic>[].obs; // Son eklenen postları tutmak için liste
+  var latestPosts = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() {
@@ -15,15 +17,19 @@ class DashboardController extends GetxController {
     loadDashboardData();
   }
 
-  void loadDashboardData() async {
-    var allPosts = await postRepository.getPosts(isPublishedFilter: true);
-    var drafts = await postRepository.getPosts(isPublishedFilter: false);
+  Future<void> loadDashboardData() async {
+    try {
+      final allPosts = await postRepository.getPosts(isPublishedFilter: true);
+      final drafts = await postRepository.getPosts(isPublishedFilter: false);
 
-    totalPosts(allPosts.length + drafts.length);
-    publishedPosts(allPosts.length);
-    draftPosts(drafts.length);
-
-    // Son 5 postu yükle
-    latestPosts.value = (allPosts + drafts).take(5).toList();
+      totalPosts.value = allPosts.length + drafts.length;
+      publishedPosts.value = allPosts.length;
+      draftPosts.value = drafts.length;
+      latestPosts.value =
+          (allPosts + drafts).cast<Map<String, dynamic>>().take(5).toList();
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load dashboard data.',
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }
