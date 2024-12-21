@@ -36,7 +36,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       );
       if (userCredential.user != null) {
         // Başarılı giriş sonrası admin paneline yönlendirme
-        Get.offAll(DashboardPage());
+        Get.offAll(const DashboardPage());
       }
     } on FirebaseAuthException catch (e) {
       Get.snackbar('Hata', e.message ?? 'Giriş yapılamadı',

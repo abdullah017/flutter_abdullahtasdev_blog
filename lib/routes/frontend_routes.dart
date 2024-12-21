@@ -1,6 +1,3 @@
-// lib/routes/frontend_routes.dart
-
-import 'package:abdullahtasdev/core/utils/slug_utils.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/audio_blog_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/audio_blog_detail_binding.dart';
 import 'package:abdullahtasdev/presentation/frontend/bindings/blog_binding.dart';
@@ -50,8 +47,8 @@ class FrontendRoutes {
     GetPage(
       name: '/sesli-blog-detay/:slug',
       page: () {
-        final slug = Get.parameters['slug']!;
-        final id = SlugUtils.extractIdFromSlug(slug);
+        // final slug = Get.parameters['slug']!;
+        // //final id = SlugUtils.extractIdFromSlug(slug);
         return const AudioBlogDetailPage();
       },
       binding: AudioBlogDetailBinding(),
