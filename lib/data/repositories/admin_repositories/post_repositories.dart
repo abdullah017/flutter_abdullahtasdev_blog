@@ -1,7 +1,12 @@
-import 'package:abdullahtasdev/core/network/graphql_api_service.dart';
 import 'dart:developer' as developer;
+import 'package:abdullahtasdev/core/api/graphql/graphql_service.dart';
+import 'package:abdullahtasdev/core/api/graphql/mutations.dart';
+import 'package:abdullahtasdev/core/api/graphql/queries.dart';
+
 class PostRepository {
   final GraphQLService _graphqlService = GraphQLService();
+  final GraphQLQueries _queries = GraphQLQueries();
+  final GraphQLMutations _mutations = GraphQLMutations();
 
   // Tüm postları listeleme
   Future<List<dynamic>> getPosts({bool? isPublishedFilter}) async {
@@ -33,19 +38,7 @@ class PostRepository {
 
 // Post detaylarını ID'ye göre getir
   Future<Map<String, dynamic>> getPostById(int id) async {
-    String query = '''
-    query GetPostById(\$id: Int!) {
-      posts_by_pk(id: \$id) {
-        id
-        title
-        content
-        cover_image
-        audio_url
-        is_published
-        created_at
-      }
-    }
-  ''';
+    String query = _queries.getPostByID;
 
     final result = await _graphqlService.performQuery(query, variables: {
       'id': id,
@@ -62,13 +55,7 @@ class PostRepository {
   // Post ekleme
   Future<bool> addPost(String title, String content, String? coverImage,
       bool isPublished, String? audioUrl) async {
-    String mutation = '''
-      mutation AddPost(\$title: String!, \$content: String!, \$coverImage: String, \$isPublished: Boolean!, \$audioUrl: String) {
-        insert_posts(objects: {title: \$title, content: \$content, cover_image: \$coverImage, is_published: \$isPublished, audio_url: \$audioUrl}) {
-          affected_rows
-        }
-      }
-    ''';
+    String mutation = _mutations.addPost;
 
     final result = await _graphqlService.performMutation(mutation, variables: {
       'title': title,
@@ -89,13 +76,7 @@ class PostRepository {
   // Post güncelleme
   Future<bool> updatePost(int id, String title, String content,
       String? coverImage, bool isPublished, String? audioUrl) async {
-    String mutation = '''
-      mutation UpdatePost(\$id: Int!, \$title: String!, \$content: String!, \$coverImage: String, \$isPublished: Boolean!, \$audioUrl: String) {
-        update_posts(where: {id: {_eq: \$id}}, _set: {title: \$title, content: \$content, cover_image: \$coverImage, is_published: \$isPublished, audio_url: \$audioUrl}) {
-          affected_rows
-        }
-      }
-    ''';
+    String mutation = _mutations.updatePost;
 
     final result = await _graphqlService.performMutation(mutation, variables: {
       'id': id,
@@ -116,13 +97,7 @@ class PostRepository {
 
   // Post silme
   Future<bool> deletePost(int id) async {
-    String mutation = '''
-      mutation DeletePost(\$id: Int!) {
-        delete_posts(where: {id: {_eq: \$id}}) {
-          affected_rows
-        }
-      }
-    ''';
+    String mutation = _mutations.deletePost;
 
     final result = await _graphqlService.performMutation(mutation, variables: {
       'id': id,
