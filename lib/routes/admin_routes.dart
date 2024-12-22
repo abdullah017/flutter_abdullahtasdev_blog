@@ -1,4 +1,5 @@
 import 'package:abdullahtasdev/presentation/admin/bindings/dashboard_binding.dart';
+import 'package:abdullahtasdev/presentation/admin/bindings/login_binding.dart';
 import 'package:abdullahtasdev/presentation/admin/bindings/post_add_binding.dart';
 import 'package:abdullahtasdev/presentation/admin/bindings/post_edit_binding.dart';
 import 'package:abdullahtasdev/presentation/admin/bindings/post_list_binding.dart';
@@ -14,7 +15,8 @@ class AdminRoutes {
   static final routes = [
     GetPage(
       name: '/admin-login',
-      page: () => const AdminLoginPage(),
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
     ),
     GetPage(
       name: '/admin',
