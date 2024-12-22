@@ -1,15 +1,18 @@
 import 'dart:typed_data';
+
+import 'package:abdullahtasdev/core/api/firebase/storage_service.dart';
 import 'package:abdullahtasdev/data/repositories/admin_repositories/post_repositories.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class PostAddController extends GetxController {
   final PostRepository postRepository;
+  final StorageService storageService;
   final uuid = const Uuid();
 
-  PostAddController({required this.postRepository});
+  PostAddController(
+      {required this.postRepository, required this.storageService});
 
   var isLoading = false.obs;
   var isPublished = true.obs;
@@ -36,7 +39,7 @@ class PostAddController extends GetxController {
   Future<void> uploadCoverImage() async {
     if (coverImageBytes.value != null) {
       final fileName = 'cover_${uuid.v4()}.jpg';
-      coverImageUrl.value = await _uploadBytesToFirebase(
+      coverImageUrl.value = await storageService.uploadFile(
             coverImageBytes.value!,
             'cover_images',
             fileName,
@@ -48,7 +51,7 @@ class PostAddController extends GetxController {
   Future<void> uploadAudioFile() async {
     if (audioFileBytes.value != null) {
       final fileName = 'audio_${uuid.v4()}.mp3';
-      audioUrl.value = await _uploadBytesToFirebase(
+      audioUrl.value = await storageService.uploadFile(
             audioFileBytes.value!,
             'audio_files',
             fileName,
@@ -78,18 +81,6 @@ class PostAddController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     } finally {
       isLoading.value = false;
-    }
-  }
-
-  Future<String?> _uploadBytesToFirebase(
-      Uint8List bytes, String folderName, String fileName) async {
-    try {
-      final storageRef = FirebaseStorage.instance.ref('$folderName/$fileName');
-      final uploadTask = storageRef.putData(bytes);
-      final snapshot = await uploadTask.whenComplete(() => {});
-      return await snapshot.ref.getDownloadURL();
-    } catch (e) {
-      return null;
     }
   }
 }
